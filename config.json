@@ -5,6 +5,16 @@
 			"requestsApp": "../demos/requestsApp"
 		}
 	},
+
+	// Array of AMD modules identifiers. When defined at the top level dependencies of the dojox/app application.
+	// These could also be added to the define for the app, for example they could be added in todoApp.js 
+	// When defined at view level, dependencies for the view.
+	"dependencies": [
+		"dojo/store/Memory",
+		"dojox/mobile/Heading",
+		"dojox/mobile/EdgeToEdgeStoreList"
+	],
+	
 	"modules": [
 	],
 	"controllers": [
@@ -22,15 +32,6 @@
 			"controllers": [
 				"dojox/app/controllers/HistoryHash"
 			]
-		}
-	},
-	"stores": {
-		"requestsStore": {
-           "type": "dojo/store/Memory",
-	       "observable": true,
-           "params": {
-                "data": "modelApp.listData"
-           }
 		}
 	},
 	"defaultView": "list",

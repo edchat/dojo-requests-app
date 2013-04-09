@@ -12,10 +12,7 @@
 				data-dojo-config="async: true">
 		</script>
 		<script>
-			require(["dojox/app/main", "dojo/sniff", "dojo/json", "dojo/text!./config.json"],
-				function(Application, has, json, config){
-					has.add("html5history", has("ie") && (has("ie") <= 9));
-					Application(json.parse(config));
+			require(["./src.js"], function(){
 			});
 		</script>
 	</head>
