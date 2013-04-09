@@ -1,0 +1,43 @@
+{
+	"id": "requestsApp",
+	"loaderConfig": {
+		"paths": {
+			"requestsApp": "../demos/requestsApp"
+		}
+	},
+	"modules": [
+	],
+	"controllers": [
+		"dojox/app/controllers/Load",
+		"dojox/app/controllers/Transition",
+		"dojox/app/controllers/Layout"
+	],
+	"has": {
+		"html5history": {
+			"controllers": [
+				"dojox/app/controllers/History"
+			]
+		},
+		"!html5history": {
+			"controllers": [
+				"dojox/app/controllers/HistoryHash"
+			]
+		}
+	},
+	"stores": {
+		"requestsStore": {
+           "type": "dojo/store/Memory",
+	       "observable": true,
+           "params": {
+                "data": "modelApp.listData"
+           }
+		}
+	},
+	"defaultView": "list",
+	"views": {
+		"list": {
+			"controller": "requestsApp/list.js",
+			"template": "requestsApp/list.html"
+		}
+	}
+}
