@@ -2,19 +2,20 @@
 	"id": "requestsApp",
 	"loaderConfig": {
 		"paths": {
-			"requestsApp": "../demos/requestsApp"
+			"requestsApp": "../requestsApp"
 		}
 	},
-
-	// Array of AMD modules identifiers. When defined at the top level dependencies of the dojox/app application.
-	// These could also be added to the define for the app, for example they could be added in todoApp.js 
-	// When defined at view level, dependencies for the view.
 	"dependencies": [
-		"dojo/store/Memory",
-		"dojox/mobile/Heading",
-		"dojox/mobile/EdgeToEdgeStoreList"
+			"dojo/store/Observable",
+			"dojox/mobile/Heading",
+			"dojox/mobile/ScrollableView",
+			"dojox/mobile/ToolBarButton",
+			"dojo/store/Memory",
+			"dojox/mobile/ExpandingTextArea",
+			"dojox/mobile/RoundRectStoreList",
+			"dojox/mobile/EdgeToEdgeCategory",
+			"dojox/mobile/Button"
 	],
-	
 	"modules": [
 	],
 	"controllers": [
@@ -22,6 +23,36 @@
 		"dojox/app/controllers/Transition",
 		"dojox/app/controllers/Layout"
 	],
+	"nls": "requestsApp/nls/requests",
+	"defaultTransition": "slide",
+	"defaultView": "requestList",
+	"stores": {
+		"requestsListStore":{
+			"type": "dojo/store/Memory",
+			"observable": true,
+			"params": {
+				"data": "requestsApp.requestsListData"
+      		}
+  		}
+	},
+	"views": {
+		"requestList":{
+			"controller" : "requestsApp/views/requestList/list.js",
+			"template": "requestsApp/views/requestList/list.html",
+			"nls": "requestsApp/nls/list",
+			"dependencies":["dojox/mobile/TextBox"],
+			"has": {
+				"!phone": {
+					"constraint": "left"
+				}
+			}
+		},
+		"requestItemDetails":{
+			"controller" : "requestsApp/views/requestList/detail.js",
+			"template": "requestsApp/views/requestList/detail.html",
+			"nls": "requestsApp/nls/requestsDetail"
+		}
+	},
 	"has": {
 		"html5history": {
 			"controllers": [
@@ -32,13 +63,6 @@
 			"controllers": [
 				"dojox/app/controllers/HistoryHash"
 			]
-		}
-	},
-	"defaultView": "list",
-	"views": {
-		"list": {
-			"controller": "requestsApp/list.js",
-			"template": "requestsApp/list.html"
 		}
 	}
 }

@@ -1,0 +1,21 @@
+{
+	"identifier": "id",
+	"items": [
+		{
+			"id": "hours",
+			"description": "Units in hours"
+		},
+		{
+			"id": "days",
+			"description": "Units in days"
+		},
+		{
+			"id": "weeks",
+			"description": "Units in weeks"
+		},
+		{
+			"id": "months",
+			"description": "Units in months"
+		}
+	]
+}

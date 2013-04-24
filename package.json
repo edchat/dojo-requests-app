@@ -1,0 +1,5 @@
+{
+	"name": "requestsApp",
+	"version": "0.5",
+	"dojoBuild": "requests.profile.js"
+}

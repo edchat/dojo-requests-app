@@ -1,0 +1,63 @@
+<div class="view mblView">
+<!--	<h2 data-dojo-type="dojox/mobile/EdgeToEdgeCategory" class="showOnPhone hideOnTablet" style="height: 32px;" data-app-constraint="top">List Item Details</h2>
+    <h1 class="showOnTablet hideOnPhone"  dojoType="dojox/mobile/Heading" data-dojo-props='back:"Back"'>List Item Details</h1>
+  -->
+    <form name="listTestForm" id="listTestForm">
+	<!--
+			<h2 data-dojo-type="dojox/mobile/EdgeToEdgeCategory" style="height: 32px;" data-app-constraint="top">Updates to First or Last Name will be reflected in the list</h2>
+	-->
+		<table id="table" cellspacing="10"  style="width: 100%">
+			<tr>
+				<td style="width: 100px;" class="layout">
+					<button type="button" data-dojo-type="dojox/mobile/Button" data-dojo-attach-point="save" class="mblBlueButton">Save</button>
+				</td>
+			</tr>
+		</table>
+
+		<table id="table2" cellspacing="10"  style="width: 100%">
+			<tr>
+				<td style="width: 100px;" class="layout">Id</td>
+				<td class="layout">
+					<input data-dojo-type="dojox/mobile/TextBox" data-dojo-attach-point="id"
+						data-dojo-props="placeholder:'Id'">
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 100px;" class="layout">Request Type</td>
+				<td class="layout">
+					<input data-dojo-type="dojox/mobile/TextBox" data-dojo-attach-point="requestType"
+						data-dojo-props="placeholder:'Request Type'">
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" class="layout">Description</td>
+			</tr>
+			<tr>
+				<td colspan="2" class="layout">
+					<textarea id="detail_todo" data-dojo-type="dojox/mobile/ExpandingTextArea"  data-dojo-attach-point="label" placeholder="Description"></textarea>							</td>
+			</tr>
+			<tr>
+				<td style="width: 100px;" class="layout">Status</td>
+				<td class="layout">
+					<input data-dojo-type="dojox/mobile/TextBox" data-dojo-attach-point="status"
+
+						data-dojo-props="placeholder:'Status'">
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 100px;" class="layout">Priority</td>
+				<td class="layout">
+					<input data-dojo-type="dojox/mobile/TextBox" data-dojo-attach-point="priority"
+						data-dojo-props="placeholder:'Priority'">
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 100px;" class="layout">Requested By</td>
+				<td class="layout">
+					<input data-dojo-type="dojox/mobile/TextBox" data-dojo-attach-point="requestedBy"
+						data-dojo-props="placeholder:'Requested By'">
+				</td>
+			</tr>
+		</table>
+		</form>
+</div>
