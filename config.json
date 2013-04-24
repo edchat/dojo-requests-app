@@ -37,8 +37,8 @@
 	},
 	"views": {
 		"requestList":{
-			"controller" : "requestsApp/views/requestList/list.js",
-			"template": "requestsApp/views/requestList/list.html",
+			"controller" : "requestsApp/views/list.js",
+			"template": "requestsApp/views/list.html",
 			"nls": "requestsApp/nls/list",
 			"dependencies":["dojox/mobile/TextBox"],
 			"has": {
@@ -48,8 +48,8 @@
 			}
 		},
 		"requestItemDetails":{
-			"controller" : "requestsApp/views/requestList/detail.js",
-			"template": "requestsApp/views/requestList/detail.html",
+			"controller" : "requestsApp/views/detail.js",
+			"template": "requestsApp/views/detail.html",
 			"nls": "requestsApp/nls/requestsDetail"
 		}
 	},
