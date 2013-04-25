@@ -4,23 +4,24 @@
 				data-dojo-attach-point="backButton"
 				data-dojo-props="arrow: 'left', target: 'requestList'"
 				style="position: absolute; left: 0">${nls.list}</button>
-		<button data-dojo-type="dojox/mobile/ToolBarButton" data-dojo-attach-point="cancelButton"
-				style="position: absolute; left: 0; display: 'none'"
-				data-dojo-props="target: 'requestItemDetails', transitionOptions: { params: { edit: false } }">${nls.cancel}</button>
 		${nls.details}
-		<button data-dojo-type="dojox/mobile/ToolBarButton" data-dojo-attach-point="editButton"
-				style="position: absolute; right: 0"
-				data-dojo-props="target: 'requestItemDetails', transitionOptions: { params: { } }"></button>
 	</div>
 	<div data-dojo-type="dojox/mobile/ScrollableView">
 		<div data-dojo-type="dojox/mobile/FormLayout">
 			<div>
+				<fieldset>
+					<button data-dojo-type="dojox/mobile/Button"
+						data-dojo-attach-point="saveButton" data-dojo-attach-event="onClick: _saveForm"
+						class="mblBlueButton" style="padding: 0 10px">${nls.save}</button>
+				</fieldset>
+			</div>
+			<div>
 				<label for="id">${nls.id}</label>
 				<fieldset>
-					<input id="id" name="id" data-dojo-type="dojox/mobile/TextArea"
-						   data-dojo-props="readOnly: true, placeHolder: '${nls.id}'" data-dojo-attach-point="id">
+					<input id="reqid" name="id" data-dojo-type="dojox/mobile/TextArea"
+						   data-dojo-props="readOnly: true, placeHolder: '${nls.id}'" data-dojo-attach-point="reqid">
 					<button data-dojo-type="dojox/mobile/Button"
-						data-dojo-attach-point="deleteButton2" data-dojo-attach-event="onClick: _deleteContact"
+						data-dojo-attach-point="deleteButton2" data-dojo-attach-event="onClick: _deleteRequest"
 						class="mblRedButton" style="padding: 0 10px">${nls.delete}</button>
 				</fieldset>
 			</div>
@@ -28,88 +29,81 @@
 				<label for="requestType">${nls.requestType}</label>
 				<fieldset>
 					<input id="requestType" name="requestType" data-dojo-type="dojox/mobile/TextArea"
-						   data-dojo-props="readOnly: true, placeHolder: '${nls.requestType}'" data-dojo-attach-point="requestType">
+						   data-dojo-props="placeHolder: '${nls.requestType}'" data-dojo-attach-point="requestType">
 				</fieldset>
 			</div>
 			<div>
 				<label for="description">${nls.description}</label>
 				<fieldset>
 					<textarea id="description" name="description" data-dojo-type="dojox/mobile/ExpandingTextArea" style="width: 94%"
-						   data-dojo-props="readOnly: true, placeHolder: '${nls.description}'" data-dojo-attach-point="description"></textarea>
+						   data-dojo-props="placeHolder: '${nls.description}'" data-dojo-attach-point="description"></textarea>
 				</fieldset>
 			</div>
 			<div>
 				<label for="status">${nls.status}</label>
 	   			<fieldset>
         	   		<input id="status" name="status" data-dojo-type="dojox/mobile/TextArea"
- 							data-dojo-props="readOnly: true, placeHolder: '${nls.status}'" data-dojo-attach-point="status">
+ 							data-dojo-props="placeHolder: '${nls.status}'" data-dojo-attach-point="status">
 	   			</fieldset>
 		   </div>
 			<div>
 				<label for="priority">${nls.priority}</label>
 				<fieldset>
 					<input id="priority" name="priority" data-dojo-type="dojox/mobile/TextArea"
-						   data-dojo-props="readOnly: true, placeHolder: '${nls.priority}'" data-dojo-attach-point="priority">
+						   data-dojo-props="placeHolder: '${nls.priority}'" data-dojo-attach-point="priority">
 				</fieldset>
 			</div>
 			<div>
 				<label for="requestedBy">${nls.requestedBy}</label>
 				<fieldset>
 					<input id="requestedBy" name="requestedBy" data-dojo-type="dojox/mobile/TextArea"
-						   data-dojo-props="readOnly: true, placeHolder: '${nls.requestedBy}'" data-dojo-attach-point="requestedBy">
+						   data-dojo-props="placeHolder: '${nls.requestedBy}'" data-dojo-attach-point="requestedBy">
 				</fieldset>
 			</div>
 			<div>
 				<label for="requestedFinishDate">${nls.requestedFinishDate}</label>
 				<fieldset>
 					<input id="requestedFinishDate" name="requestedFinishDate" data-dojo-type="dojox/mobile/TextArea"
-						   data-dojo-props="readOnly: true, placeHolder: '${nls.requestedFinishDate}'" data-dojo-attach-point="requestedFinishDate">
+						   data-dojo-props="placeHolder: '${nls.requestedFinishDate}'" data-dojo-attach-point="requestedFinishDate">
 				</fieldset>
 			</div>
 			<div>
 				<label for="assignedTo">${nls.assignedTo}</label>
 				<fieldset>
 					<input id="assignedTo" name="assignedTo" data-dojo-type="dojox/mobile/TextArea"
-						   data-dojo-props="readOnly: true, placeHolder: '${nls.assignedTo}'" data-dojo-attach-point="assignedTo">
+						   data-dojo-props="placeHolder: '${nls.assignedTo}'" data-dojo-attach-point="assignedTo">
 				</fieldset>
 			</div>
 			<div>
 				<label for="actualFinishDate">${nls.actualFinishDate}</label>
 				<fieldset>
 					<input id="actualFinishDate" name="actualFinishDate" data-dojo-type="dojox/mobile/TextArea"
-						   data-dojo-props="readOnly: true, placeHolder: '${nls.actualFinishDate}'" data-dojo-attach-point="actualFinishDate">
+						   data-dojo-props="placeHolder: '${nls.actualFinishDate}'" data-dojo-attach-point="actualFinishDate">
 				</fieldset>
 			</div>
 			<div>
 				<label for="estimatedUnits">${nls.estimatedUnits}</label>
 				<fieldset>
 					<input id="estimatedUnits" name="estimatedUnits" data-dojo-type="dojox/mobile/TextArea"
-						   data-dojo-props="readOnly: true, placeHolder: '${nls.estimatedUnits}'" data-dojo-attach-point="estimatedUnits">
+						   data-dojo-props="placeHolder: '${nls.estimatedUnits}'" data-dojo-attach-point="estimatedUnits">
 					<input id="unitType" name="unitType" data-dojo-type="dojox/mobile/TextArea"
-						   data-dojo-props="readOnly: true, placeHolder: '${nls.unitType}'" data-dojo-attach-point="unitType">
+						   data-dojo-props="placeHolder: '${nls.unitType}'" data-dojo-attach-point="unitType">
 				</fieldset>
 			</div>
 			<div>
 				<label for="createdDate">${nls.createdDate}</label>
 				<fieldset>
 					<input id="createdDate" name="createdDate" data-dojo-type="dojox/mobile/TextArea"
-						   data-dojo-props="readOnly: true, placeHolder: '${nls.createdDate}'" data-dojo-attach-point="createdDate">
+						   data-dojo-props="placeHolder: '${nls.createdDate}'" data-dojo-attach-point="createdDate">
 				</fieldset>
 			</div>
 			<div>
 				<label for="updatedDate">${nls.updatedDate}</label>
 				<fieldset>
 					<input id="updatedDate" name="updatedDate" data-dojo-type="dojox/mobile/TextArea"
-						   data-dojo-props="readOnly: true, placeHolder: '${nls.updatedDate}'" data-dojo-attach-point="updatedDate">
+						   data-dojo-props="placeHolder: '${nls.updatedDate}'" data-dojo-attach-point="updatedDate">
 				</fieldset>
 			</div>
-	<!--	<div>
-				<div></div>
-				<button data-dojo-type="dojox/mobile/Button"
-						data-dojo-attach-point="deleteButton" data-dojo-attach-event="onClick: _deleteContact"
-						class="mblRedButton" style="padding: 0 10px">${nls.delete}</button>
-			</div>
-	-->
 		</div>
 	</div>
 </div>

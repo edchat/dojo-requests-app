@@ -5,11 +5,11 @@
 	<div data-dojo-type="dojox/mobile/Heading" data-dojo-props="fixed: 'top'">
 		${nls.requests}
 		<button data-dojo-type="dojox/mobile/ToolBarButton" style="position: absolute; right: 0"
-				data-dojo-props="target: 'requestItemDetails', transitionOptions: { params: { edit: true } }"
+				data-dojo-props="target: 'requestItemDetails'"
 				data-dojo-attach-point="add">${nls.add}</button>
 	</div>
 	<div data-dojo-type="dojox/mobile/EdgeToEdgeStoreList" data-dojo-mixins="dojox/mobile/FilteredListMixin"
 			 data-dojo-attach-point="requests"
 			 data-dojo-props="store: this.loadedStores.requestsListStore,
-			 itemRenderer: this.ContactListItem, placeHolder: '${nls.search}', stateful: !has('phone')"></div>
+			 itemRenderer: this.RequestListItem, placeHolder: '${nls.search}', stateful: !has('phone')"></div>
 </div>

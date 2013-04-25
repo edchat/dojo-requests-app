@@ -7,8 +7,10 @@
 	},
 	"dependencies": [
 			"dojo/store/Observable",
+			"dojox/mobile/compat",
 			"dojox/mobile/Heading",
 			"dojox/mobile/ScrollableView",
+			"dojox/mobile/View",
 			"dojox/mobile/ToolBarButton",
 			"dojo/store/Memory",
 			"dojox/mobile/ExpandingTextArea",

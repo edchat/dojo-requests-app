@@ -1,7 +1,7 @@
 define(["dojo/_base/declare", "dojo/_base/array", "dojo/has", "dojox/mobile/ListItem",
 	"dojox/mobile/EdgeToEdgeStoreList", "dojox/mobile/FilteredListMixin"],
 	function(declare, array, has, ListItem){
-	var ContactListItem = declare(ListItem, {
+	var RequestListItem = declare(ListItem, {
 		target: "requestItemDetails",
 		clickable: true,
 		// we don't get an arrow if we are on a two panes layout (tablet)
@@ -17,7 +17,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/has", "dojox/mobile/List
 	});
 
 	return {
-		ContactListItem: ContactListItem,
+		RequestListItem: RequestListItem,
 		init: function(){
 			var view = this;
 			this.requests.on("add", function(item){

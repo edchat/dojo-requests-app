@@ -1,6 +1,6 @@
 # requestsApp
 
-This project provides a sample tutorial contact application based on Dojo 1.9 dojox/app module.
+This project provides a sample tutorial request application based on Dojo 1.9 dojox/app module.
 
 ## Licensing
 
