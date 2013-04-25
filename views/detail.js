@@ -1,6 +1,6 @@
-define(["dojo/_base/array", "dojo/_base/lang", "dojo/has", "dojo/when", "dojo/query", "dijit/registry",
+define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/has", "dojo/when", "dojo/query", "dijit/registry",
 	"dojox/mobile/Button", "dojox/mobile/FormLayout", "dojox/mobile/TextArea"],
-	function (array, lang, has, when, query, registry){
+	function (array, lang, dom, has, when, query, registry){
 
 		var getStoreField=function (arr, type){
 			var index=array.indexOf(arr, function (item){
@@ -37,6 +37,8 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/has", "dojo/when", "dojo/qu
 				when(promise, function (request){
 					view.reqid.set("value", request?request.id:null);
 					view.requestType.set("value", request?request.requestType:null);
+				//  if we want to use a select instead of a mobile/ComboBox
+				//	dom.byId("requestType2").value = request?request.requestType:null;
 					view.description.set("value", request?request.label:null);
 					view.status.set("value", request?request.status:null);
 					view.priority.set("value", request?request.priority:null);

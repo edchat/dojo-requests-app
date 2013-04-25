@@ -1,0 +1,13 @@
+{
+	"identifier": "id",
+	"items": [
+		{
+			"id": "open",
+			"description": "An Open Request"
+		},
+		{
+			"id": "closed",
+			"description": "A Closed Request"
+		}
+	]
+}

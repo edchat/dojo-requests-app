@@ -16,7 +16,7 @@
 				</fieldset>
 			</div>
 			<div>
-				<label for="id">${nls.id}</label>
+				<label for="reqid">${nls.id}</label>
 				<fieldset>
 					<input id="reqid" name="id" data-dojo-type="dojox/mobile/TextArea"
 						   data-dojo-props="readOnly: true, placeHolder: '${nls.id}'" data-dojo-attach-point="reqid">
@@ -28,10 +28,23 @@
 			<div>
 				<label for="requestType">${nls.requestType}</label>
 				<fieldset>
-					<input id="requestType" name="requestType" data-dojo-type="dojox/mobile/TextArea"
-						   data-dojo-props="placeHolder: '${nls.requestType}'" data-dojo-attach-point="requestType">
+					<input id="requestType" name="requestType" data-dojo-type="dojox/mobile/ComboBox"
+						   data-dojo-props="store: this.loadedStores.requestTypeStore, placeHolder: '${nls.requestType}', searchAttr: 'id'"
+						   data-dojo-attach-point="requestType">
 				</fieldset>
 			</div>
+	<!--
+			<div>
+				<label for="requestType2">${nls.requestType}</label>
+				<fieldset>
+					<select id="requestType2">
+					  <option value="software">software</option>
+					  <option value="consulting">consulting</option>
+					  <option value="service">service</option>
+					</select>
+				</fieldset>
+			</div>
+	-->
 			<div>
 				<label for="description">${nls.description}</label>
 				<fieldset>
@@ -42,15 +55,15 @@
 			<div>
 				<label for="status">${nls.status}</label>
 	   			<fieldset>
-        	   		<input id="status" name="status" data-dojo-type="dojox/mobile/TextArea"
- 							data-dojo-props="placeHolder: '${nls.status}'" data-dojo-attach-point="status">
+        	   		<input id="status" name="status" data-dojo-type="dojox/mobile/ComboBox"
+ 							data-dojo-props="store: this.loadedStores.requestStatusStore, placeHolder: '${nls.status}', searchAttr: 'id'" data-dojo-attach-point="status">
 	   			</fieldset>
 		   </div>
 			<div>
 				<label for="priority">${nls.priority}</label>
 				<fieldset>
-					<input id="priority" name="priority" data-dojo-type="dojox/mobile/TextArea"
-						   data-dojo-props="placeHolder: '${nls.priority}'" data-dojo-attach-point="priority">
+					<input id="priority" name="priority" data-dojo-type="dojox/mobile/ComboBox"
+						   data-dojo-props="store: this.loadedStores.requestPriorityStore, placeHolder: '${nls.priority}', searchAttr: 'id'" data-dojo-attach-point="priority">
 				</fieldset>
 			</div>
 			<div>
@@ -86,8 +99,8 @@
 				<fieldset>
 					<input id="estimatedUnits" name="estimatedUnits" data-dojo-type="dojox/mobile/TextArea"
 						   data-dojo-props="placeHolder: '${nls.estimatedUnits}'" data-dojo-attach-point="estimatedUnits">
-					<input id="unitType" name="unitType" data-dojo-type="dojox/mobile/TextArea"
-						   data-dojo-props="placeHolder: '${nls.unitType}'" data-dojo-attach-point="unitType">
+					<input id="unitType" name="unitType" data-dojo-type="dojox/mobile/ComboBox"
+						   data-dojo-props="store: this.loadedStores.requestUnitTypeStore, placeHolder: '${nls.unitType}', searchAttr: 'id'" data-dojo-attach-point="unitType">
 				</fieldset>
 			</div>
 			<div>
