@@ -1,6 +1,7 @@
-define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/has", "dojo/when", "dojo/query", "dijit/registry",
+define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct", "dojo/has", "dojo/when", "dojo/query", "dijit/registry", "dojo/on", "dojo/date/stamp",
 	"dojox/mobile/Button", "dojox/mobile/FormLayout", "dojox/mobile/TextArea"],
-	function (array, lang, dom, has, when, query, registry){
+	function (array, lang, dom, domConstruct, has, when, query, registry, on, stamp, Select, ObjectStore){
+		var _onResults = []; // events on array
 
 		var getStoreField=function (arr, type){
 			var index=array.indexOf(arr, function (item){
@@ -17,6 +18,33 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/has", "dojo/whe
 		};
 
 		return {
+			init: function(){
+
+				this._initSelectOptions();
+
+				opener = this.opener;
+				var onResult = on(this.requestedFinishDate, "click", lang.hitch(this, function(){
+					this.datePicker2.set("value", this.requestedFinishDate.get("value"));
+					this.opener.show(this.requestedFinishDate.domNode, ['below-centered','above-centered','after','before']);
+				}));
+				_onResults.push(onResult);
+
+				onResult = on(this.save, "click", lang.hitch(this, function(){
+					this.opener.hide(true);
+					date = this.datePicker2.get("value");
+					this.requestedFinishDate.set("value",date);
+				}));
+				_onResults.push(onResult);
+
+				onResult = on(this.cancel, "click", lang.hitch(this, function(){
+					this.opener.hide(false);
+				}));
+				_onResults.push(onResult);
+
+				// initialize the global Date variable as today
+				date = stamp.toISOString(new Date(), {selector: "date"});
+			},
+
 			beforeActivate: function (previousView){
 				// get the id of the displayed contact from the params
 				var id=this.params.id;
@@ -36,22 +64,47 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/has", "dojo/whe
 				}
 				when(promise, function (request){
 					view.reqid.set("value", request?request.id:null);
-					view.requestType.set("value", request?request.requestType:null);
-				//  if we want to use a select instead of a mobile/ComboBox
-				//	dom.byId("requestType2").value = request?request.requestType:null;
+					dom.byId("requestType").value = request?request.requestType:null;
 					view.description.set("value", request?request.label:null);
-					view.status.set("value", request?request.status:null);
-					view.priority.set("value", request?request.priority:null);
+					dom.byId("status").value = request?request.status:null;
+					dom.byId("priority").value = request?request.priority:null;
 					view.requestedBy.set("value", request?request.requestedBy:null);
 					view.requestedFinishDate.set("value", request?request.requestedFinishDate:null);
 					view.assignedTo.set("value", request?request.assignedTo:null);
 					view.actualFinishDate.set("value", request?request.actualFinishDate:null);
 					view.estimatedUnits.set("value", request?request.estimatedUnits:null);
-					view.unitType.set("value", request?request.unitType:null);
+					dom.byId("unitType").value = request?request.unitType:null;
 					view.createdDate.set("value", request?request.createdDate:null);
 					view.updatedDate.set("value", request?request.updatedDate:null);
 				});
 			},
+			_initSelectOptions: function (){
+				//setup requestType select here:
+				array.forEach(this.loadedStores.requestTypeStore.data, function(child){
+					domConstruct.create("option", {
+					            value: child.id, label: child.description
+					        }, dom.byId("requestType"));
+				});
+				//setup status select here:
+				array.forEach(this.loadedStores.requestStatusStore.data, function(child){
+					domConstruct.create("option", {
+					            value: child.id, label: child.description
+					        }, dom.byId("status"));
+				});
+				//setup priority select here:
+				array.forEach(this.loadedStores.requestPriorityStore.data, function(child){
+					domConstruct.create("option", {
+					            value: child.id, label: child.description
+					        }, dom.byId("priority"));
+				});
+				//setup unitType select here:
+				array.forEach(this.loadedStores.requestUnitTypeStore.data, function(child){
+					domConstruct.create("option", {
+					            value: child.id, label: child.description
+					        }, dom.byId("unitType"));
+				});
+			},
+
 			_saveForm: function (){
 				var id=this.params.id || this.reqid.get("value");
 				var view=this;
@@ -88,26 +141,32 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/has", "dojo/whe
 				// set back the values on the request object
 				// deal with description first
 				this._setRequestValue(this.description, request, "label");
-				this._setRequestValue(this.requestType, request, "requestType");
-				this._setRequestValue(this.status, request, "status");
-				this._setRequestValue(this.priority, request, "priority");
+				this._setRequestValueFromDom("requestType", request, "requestType");
+				this._setRequestValueFromDom("status", request, "status");
+				this._setRequestValueFromDom("priority", request, "priority");
 				this._setRequestValue(this.requestedBy, request, "requestedBy");
 				this._setRequestValue(this.requestedFinishDate, request, "requestedFinishDate");
 				this._setRequestValue(this.actualFinishDate, request, "actualFinishDate");
 				this._setRequestValue(this.estimatedUnits, request, "estimatedUnits");
-				this._setRequestValue(this.unitType, request, "unitType");
+				this._setRequestValueFromDom("unitType", request, "unitType");
 				this._setRequestValue(this.createdDate, request, "createdDate");
 				this._setRequestValue(this.updatedDate, request, "updatedDate");
 			},
 			_setRequestValue: function (widget, request, reqfield){
-				value=widget.get("value");
+				var value = widget.get("value");
 				if(typeof value !== "undefined"){
+					request[reqfield]=value;
+				}
+			},
+			_setRequestValueFromDom: function (domid, request, reqfield){
+				var value = dom.byId(domid).value;
+				if(value !== "undefined"){
 					request[reqfield]=value;
 				}
 			},
 
 			_deleteRequest: function (){
-				var reqid=this.params.id || this.reqid.get("value");
+				var reqid = this.params.id || this.reqid.get("value");
 				this.loadedStores.requestsListStore.remove(reqid);
 				// we want to be back to list
 				this.app.transitionToView(this.domNode, { target: "requestList" });

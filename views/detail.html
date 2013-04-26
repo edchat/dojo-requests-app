@@ -28,23 +28,11 @@
 			<div>
 				<label for="requestType">${nls.requestType}</label>
 				<fieldset>
-					<input id="requestType" name="requestType" data-dojo-type="dojox/mobile/ComboBox"
-						   data-dojo-props="store: this.loadedStores.requestTypeStore, placeHolder: '${nls.requestType}', searchAttr: 'id'"
-						   data-dojo-attach-point="requestType">
-				</fieldset>
-			</div>
-	<!--
-			<div>
-				<label for="requestType2">${nls.requestType}</label>
-				<fieldset>
-					<select id="requestType2">
-					  <option value="software">software</option>
-					  <option value="consulting">consulting</option>
-					  <option value="service">service</option>
+					<select id="requestType">
 					</select>
 				</fieldset>
 			</div>
-	-->
+
 			<div>
 				<label for="description">${nls.description}</label>
 				<fieldset>
@@ -52,13 +40,22 @@
 						   data-dojo-props="placeHolder: '${nls.description}'" data-dojo-attach-point="description"></textarea>
 				</fieldset>
 			</div>
+		<!--
 			<div>
 				<label for="status">${nls.status}</label>
 	   			<fieldset>
         	   		<input id="status" name="status" data-dojo-type="dojox/mobile/ComboBox"
  							data-dojo-props="store: this.loadedStores.requestStatusStore, placeHolder: '${nls.status}', searchAttr: 'id'" data-dojo-attach-point="status">
 	   			</fieldset>
+			</div>
+		-->
+			<div>
+				<label for="status">${nls.status}</label>
+	   			<fieldset>
+					<select id="status"></select>
+	   			</fieldset>
 		   </div>
+	<!--
 			<div>
 				<label for="priority">${nls.priority}</label>
 				<fieldset>
@@ -66,6 +63,13 @@
 						   data-dojo-props="store: this.loadedStores.requestPriorityStore, placeHolder: '${nls.priority}', searchAttr: 'id'" data-dojo-attach-point="priority">
 				</fieldset>
 			</div>
+	-->
+			<div>
+				<label for="priority">${nls.priority}</label>
+	   			<fieldset>
+					<select id="priority"></select>
+	   			</fieldset>
+		   </div>
 			<div>
 				<label for="requestedBy">${nls.requestedBy}</label>
 				<fieldset>
@@ -77,7 +81,7 @@
 				<label for="requestedFinishDate">${nls.requestedFinishDate}</label>
 				<fieldset>
 					<input id="requestedFinishDate" name="requestedFinishDate" data-dojo-type="dojox/mobile/TextArea"
-						   data-dojo-props="placeHolder: '${nls.requestedFinishDate}'" data-dojo-attach-point="requestedFinishDate">
+						   data-dojo-props="readOnly: true, placeHolder: '${nls.requestedFinishDate}'" data-dojo-attach-point="requestedFinishDate">
 				</fieldset>
 			</div>
 			<div>
@@ -99,8 +103,11 @@
 				<fieldset>
 					<input id="estimatedUnits" name="estimatedUnits" data-dojo-type="dojox/mobile/TextArea"
 						   data-dojo-props="placeHolder: '${nls.estimatedUnits}'" data-dojo-attach-point="estimatedUnits">
+					<select id="unitType"></select>
+				<!--
 					<input id="unitType" name="unitType" data-dojo-type="dojox/mobile/ComboBox"
 						   data-dojo-props="store: this.loadedStores.requestUnitTypeStore, placeHolder: '${nls.unitType}', searchAttr: 'id'" data-dojo-attach-point="unitType">
+				-->
 				</fieldset>
 			</div>
 			<div>
@@ -119,4 +126,18 @@
 			</div>
 		</div>
 	</div>
+	<div id="opener" data-dojo-attach-point="opener" data-dojo-type="dojox/mobile/Opener">
+		<h1 data-dojo-type="dojox/mobile/Heading" label="Date Picker">
+			<span data-dojo-type="dojox/mobile/ToolBarButton" data-dojo-attach-point="save"
+				data-dojo-props="label:'Done'" class="mblColorBlue"
+				style="position:absolute;width:45px;right:0;">
+			</span>
+			<span data-dojo-type="dojox/mobile/ToolBarButton" data-dojo-attach-point="cancel"
+				data-dojo-props="label:'Cancel'" class="mblColorBlue"
+				style="position:absolute;width:45px;left:0;">
+			</span>
+		</h1>
+		<div data-dojo-attach-point="datePicker2" data-dojo-type="dojox/mobile/DatePicker"></div>
+	</div>
+
 </div>

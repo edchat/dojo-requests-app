@@ -6,18 +6,21 @@
 		}
 	},
 	"dependencies": [
-			"dojo/store/Observable",
-			"dojox/mobile/compat",
-			"dojox/mobile/Heading",
-			"dojox/mobile/ScrollableView",
-			"dojox/mobile/View",
-			"dojox/mobile/ToolBarButton",
-			"dojo/store/Memory",
-			"dojox/mobile/ExpandingTextArea",
-			"dojox/mobile/ComboBox",
-			"dojox/mobile/RoundRectStoreList",
-			"dojox/mobile/EdgeToEdgeCategory",
-			"dojox/mobile/Button"
+		"dojo/store/Observable",
+		"dojox/mobile/compat",
+		"dojox/mobile/Heading",
+		"dojox/mobile/ScrollableView",
+		"dojox/mobile/View",
+		"dojox/mobile/ToolBarButton",
+		"dojo/store/Memory",
+		"dojox/mobile/ExpandingTextArea",
+		"dojox/mobile/ComboBox",
+		"dojox/mobile/RoundRectStoreList",
+		"dojox/mobile/EdgeToEdgeCategory",
+		"dojox/mobile/Opener",
+		"dojox/mobile/ToolBarButton",
+		"dojox/mobile/DatePicker",
+		"dojox/mobile/Button"
 	],
 	"modules": [
 	],
