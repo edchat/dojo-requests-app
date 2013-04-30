@@ -3,8 +3,9 @@
 define(["dojo/_base/window", "dojox/app/main", "dojo/sniff", "dojox/json/ref", "dojo/text!requestsApp/config.json", "dojox/mobile/common",
 	"dojo/text!./resources/data/request.json", "dojo/text!./resources/data/requesttype.json",
 	"dojo/text!./resources/data/status.json", "dojo/text!./resources/data/priority.json",
-	"dojo/text!./resources/data/unittype.json"],
-	function(win, Application, has, json, config, common, requestsListData, requestsTypeData, requestsStatusData, requestsPriorityData, requestsUnitTypeData){
+	"dojo/text!./resources/data/unittype.json", "dojo/text!./resources/data/sortfields.json"],
+	function(win, Application, has, json, config, common, requestsListData, requestsTypeData, requestsStatusData, requestsPriorityData,
+			 requestsUnitTypeData, searchFieldsData){
 		win.global.requestsApp = {};
 
 		// setup the data for the memory stores
@@ -13,6 +14,7 @@ define(["dojo/_base/window", "dojox/app/main", "dojo/sniff", "dojox/json/ref", "
 		requestsApp.requestsStatusData = json.fromJson(requestsStatusData);
 		requestsApp.requestsPriorityData = json.fromJson(requestsPriorityData);
 		requestsApp.requestsUnitTypeData = json.fromJson(requestsUnitTypeData);
+		requestsApp.searchFieldsData = json.fromJson(searchFieldsData);
 
 		// populate has flag on whether html5 history is correctly supported or not
 		has.add("html5history", !has("ie") || has("ie") > 9);

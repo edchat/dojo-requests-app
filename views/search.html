@@ -1,0 +1,125 @@
+<div>
+	<div data-dojo-type="dojox/mobile/Heading" data-dojo-props="fixed: 'top'">
+		<button data-dojo-type="dojox/mobile/ToolBarButton"
+				data-dojo-attach-point="backButton"
+				data-dojo-props="arrow: 'left', target: 'requestList'"
+				style="position: absolute; left: 0">${nls.list}</button>
+		${nls.searchTitle}
+	</div>
+	<div data-dojo-type="dojox/mobile/ScrollableView">
+		<h2 data-dojo-attach-point="mainH2" data-dojo-type="dojox/mobile/EdgeToEdgeCategory" data-dojo-props="label:'${nls.search}', fixed:'top'"></h2>
+		<button data-dojo-type="dojox/mobile/Button"
+			data-dojo-attach-point="searchButton" data-dojo-attach-event="onClick: _saveForm"
+			data-dojo-props="label: '${nls.submitSearch}'"
+			class="mblBlueButton" style="padding: 0 10px"></button>
+		<div data-dojo-type="dojox/mobile/FormLayout">
+			<div>
+				<label for="srchreqid">${nls.id}</label>
+				<fieldset>
+					<select id="srchreqid"></select>
+				<!--
+					<input id="srchreqid" name="srchreqid" data-dojo-type="dojox/mobile/TextArea"
+						   data-dojo-props="placeHolder: '${nls.id}'" data-dojo-attach-point="srchreqid">
+				-->
+				</fieldset>
+			</div>
+			<div>
+				<label for="srchstatus">${nls.status}</label>
+	   			<fieldset>
+					<select id="srchstatus"></select>
+	   			</fieldset>
+		   </div>
+			<div>
+				<label for="srchrequestedBy">${nls.requestedBy}</label>
+				<fieldset>
+					<input id="srchrequestedBy" name="srchrequestedBy" data-dojo-type="dojox/mobile/TextArea"
+						   data-dojo-props="placeHolder: '${nls.requestedBy}'" data-dojo-attach-point="srchrequestedBy">
+				</fieldset>
+			</div>
+			<div>
+				<label for="srchrequestedFinishFromDate">${nls.requestedFinishFromToDate}</label>
+				<fieldset>
+					<input id="srchrequestedFinishFromDate" name="srchrequestedFinishFromDate" data-dojo-type="dojox/mobile/TextArea"
+						   data-dojo-props="readOnly: true, placeHolder: '${nls.requestedFinishFromDate}'" data-dojo-attach-point="srchrequestedFinishFromDate">
+					<input id="srchrequestedFinishToDate" name="srchrequestedFinishToDate" data-dojo-type="dojox/mobile/TextArea"
+						   data-dojo-props="readOnly: true, placeHolder: '${nls.requestedFinishToDate}'" data-dojo-attach-point="srchrequestedFinishToDate">
+				</fieldset>
+			</div>
+			<div>
+				<label for="srchassignedTo">${nls.assignedTo}</label>
+				<fieldset>
+					<input id="srchassignedTo" name="assignedTo" data-dojo-type="dojox/mobile/TextArea"
+						   data-dojo-props="placeHolder: '${nls.assignedTo}'" data-dojo-attach-point="srchassignedTo">
+				</fieldset>
+			</div>
+
+		<!--
+			<div>
+				<label for="actualFinishDate">${nls.actualFinishDate}</label>
+				<fieldset>
+					<input id="actualFinishDate" name="actualFinishDate" data-dojo-type="dojox/mobile/TextArea"
+						   data-dojo-props="placeHolder: '${nls.actualFinishDate}'" data-dojo-attach-point="actualFinishDate">
+				</fieldset>
+			</div>
+			<div>
+				<label for="estimatedUnits">${nls.estimatedUnits}</label>
+				<fieldset>
+					<input id="estimatedUnits" name="estimatedUnits" data-dojo-type="dojox/mobile/TextArea"
+						   data-dojo-props="placeHolder: '${nls.estimatedUnits}'" data-dojo-attach-point="estimatedUnits">
+					<select id="unitType"></select>
+				</fieldset>
+			</div>
+			<div>
+				<label for="createdDate">${nls.createdDate}</label>
+				<fieldset>
+					<input id="createdDate" name="createdDate" data-dojo-type="dojox/mobile/TextArea"
+						   data-dojo-props="placeHolder: '${nls.createdDate}'" data-dojo-attach-point="createdDate">
+				</fieldset>
+			</div>
+			<div>
+				<label for="updatedDate">${nls.updatedDate}</label>
+				<fieldset>
+					<input id="updatedDate" name="updatedDate" data-dojo-type="dojox/mobile/TextArea"
+						   data-dojo-props="placeHolder: '${nls.updatedDate}'" data-dojo-attach-point="updatedDate">
+				</fieldset>
+			</div>
+	-->
+		</div>
+		<h2 data-dojo-attach-point="srchmainH2" data-dojo-type="dojox/mobile/EdgeToEdgeCategory" data-dojo-props="label:'${nls.sort}'"></h2>
+		<div data-dojo-type="dojox/mobile/FormLayout">
+			<div>
+				<label for="srchfirstSort">${nls.firstSort}</label>
+				<fieldset>
+					<select id="srchfirstSort"></select>
+				<!--
+					<input id="srchfirstSort" name="firstSort" data-dojo-type="dojox/mobile/TextArea"
+						   data-dojo-props="placeHolder: '${nls.firstSort}'" data-dojo-attach-point="srchfirstSort">
+				-->
+					<select id="srchfirstSortDir"></select>
+				</fieldset>
+			</div>
+			<div>
+				<label for="srchsecondSort">${nls.secondSort}</label>
+				<fieldset>
+					<select id="srchsecondSort"></select>
+					<select id="srchsecondSortDir"></select>
+				</fieldset>
+			</div>
+		</div>
+
+	</div>
+	<div id="srchopener" data-dojo-attach-point="srchopener" data-dojo-type="dojox/mobile/Opener">
+		<h1 data-dojo-type="dojox/mobile/Heading" label="Date Picker">
+			<span data-dojo-type="dojox/mobile/ToolBarButton" data-dojo-attach-point="save"
+				data-dojo-props="label:'Done'" class="mblColorBlue"
+				style="position:absolute;width:45px;right:0;">
+			</span>
+			<span data-dojo-type="dojox/mobile/ToolBarButton" data-dojo-attach-point="cancel"
+				data-dojo-props="label:'Cancel'" class="mblColorBlue"
+				style="position:absolute;width:45px;left:0;">
+			</span>
+		</h1>
+		<div data-dojo-attach-point="srchdatePicker2" data-dojo-type="dojox/mobile/DatePicker"></div>
+	</div>
+
+</div>

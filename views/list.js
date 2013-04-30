@@ -1,6 +1,6 @@
-define(["dojo/_base/declare", "dojo/_base/array", "dojo/has", "dojox/mobile/ListItem",
+define(["dojo/_base/declare", "dojo/_base/lang", "dojo/_base/array", "dojo/has", "dijit/registry", "dojox/mobile/ListItem",
 	"dojox/mobile/EdgeToEdgeStoreList", "dojox/mobile/FilteredListMixin"],
-	function(declare, array, has, ListItem){
+	function(declare, lang, array, has, registry, ListItem){
 	var RequestListItem = declare(ListItem, {
 		target: "requestItemDetails",
 		clickable: true,
@@ -20,18 +20,29 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/has", "dojox/mobile/List
 		RequestListItem: RequestListItem,
 		init: function(){
 			var view = this;
-			this.requests.on("add", function(item){
+			this.requests.on("add", lang.hitch(this, function(item){
 				// select the newly added element
-				array.some(view.requests.getChildren(), function(child){
-					if(child.id == item.id){
-						view.requests.selectItem(child);
-					}
-					return false;
-				});
-			});
-			this.add.on("click", function(){
+				this.selectItemById(item.id);
+			}));
+		//	this.add.on("click", function(){
+		//		view.requests.deselectAll();
+		//	});
+			this.createButton.on("click", lang.hitch(this, function(){
 				view.requests.deselectAll();
-			});
+				this.app.transitionToView(this.domNode, {
+					target: "requestItemDetails"
+				});
+			}));
+
+			this.searchButton.on("click", lang.hitch(this, function(){
+				this.app.transitionToView(this.domNode, {
+					target: "requestListSearch"
+				});
+			}));
+
+			if(this.params && this.params.id){
+				this.selectItemById(this.params.id);
+			}
 		},
 		beforeActivate: function(){
 			// in tablet we want one to be selected at init
@@ -52,6 +63,18 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/has", "dojox/mobile/List
 					});
 				}
 			}
+		},
+
+		selectItemById: function (itemId){
+			var requests = registry.byId("requestsList");
+			array.some(requests.getChildren(), function(child){
+				if(child.id == itemId){
+					requests.selectItem(child);
+					return true;
+				}
+				return false;
+			});
 		}
+
 	};
 });

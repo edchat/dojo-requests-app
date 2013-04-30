@@ -22,6 +22,12 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 
 				this._initSelectOptions();
 
+				this.backButton.on("click", lang.hitch(this, function(){
+					this.app.transitionToView(this.domNode, {
+						target: 'requestList', reverse: 'true'
+					});
+				}));
+
 				opener = this.opener;
 				var onResult = on(this.requestedFinishDate, "click", lang.hitch(this, function(){
 					this.datePicker2.set("value", this.requestedFinishDate.get("value"));
@@ -40,6 +46,8 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 					this.opener.hide(false);
 				}));
 				_onResults.push(onResult);
+
+			//	query('input,textarea,select', theFormNode).on('change', function(e) { .. handle event here .. see e.currentTarget or e.target })
 
 				// initialize the global Date variable as today
 				date = stamp.toISOString(new Date(), {selector: "date"});
@@ -123,6 +131,24 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 					}
 				});
 			},
+
+			_copyForm: function (){
+				var id=this.params.id || this.reqid.get("value");
+				var view=this;
+				// get the updates
+				var request = {};
+			//	view._saveRequest(request);
+				request = view._copyRequest(request);
+			//	this.loadedStores.requestsListStore.add(request);
+				this.app.transitionToView(this.domNode, {
+					target: "requestItemDetails",
+					params: {
+						id: request.id
+					}
+				});
+			//	var list = this.app.children.requestsApp_requestList;
+			//	list.selectItemById(request.id);
+			},
 			_createRequest: function (){
 				var request={
 					"id": (Math.round(Math.random() * 1000000)).toString(),
@@ -131,6 +157,19 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 					"phoneNumbers": [],
 					"emails": [],
 					"organizations": []
+				};
+				// we created a new id update navigation
+				this._saveRequest(request);
+				this.loadedStores.requestsListStore.add(request);
+				return request;
+			},
+			_copyRequest: function (copyreq){
+				var request={
+					"id": (Math.round(Math.random() * 1000000)).toString(),
+					"description": copyreq.description,
+					"requestType": copyreq.requestType,
+					"status": copyreq.status,
+					"priority": copyreq.priority
 				};
 				// we created a new id update navigation
 				this._saveRequest(request);

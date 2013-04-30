@@ -1,0 +1,54 @@
+{
+	"identifier": "id",
+	"label": "label",
+	"items": [
+		{
+			"id": "id",
+			"label": "Id"
+		},
+		{
+			"id": "requestType",
+			"label": "Request Type"
+		},
+		{
+			"id": "status",
+			"label": "Status"
+		},
+		{
+			"id": "label",
+			"label": "Label"
+		},
+		{
+			"id": "priority",
+			"label": "Priority"
+		},
+		{
+			"id": "requestedBy",
+			"label": "Requested By"
+		},
+		{
+			"id": "requestedFinishDate",
+			"label": "Requested Finish Date"
+		},
+		{
+			"id": "assignedTo",
+			"label": "Assigned To"
+		},
+		{
+			"id": "actualFinishDate",
+			"label": "Actual Finish Date"
+		},
+		{
+			"id": "estimatedUnits",
+			"label": "Estimated Units"
+		},
+		{
+			"id": "createdDate",
+			"label": "Created Date"
+		},
+		{
+			"id": "updatedDate",
+			"label": "Updated Date"
+		}
+	]
+}

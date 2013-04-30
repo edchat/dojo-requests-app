@@ -81,6 +81,11 @@
 			"controller" : "requestsApp/views/detail.js",
 			"template": "requestsApp/views/detail.html",
 			"nls": "requestsApp/nls/requestsDetail"
+		},
+		"requestListSearch":{
+			"controller" : "requestsApp/views/search.js",
+			"template": "requestsApp/views/search.html",
+			"nls": "requestsApp/nls/search"
 		}
 	},
 	"has": {
