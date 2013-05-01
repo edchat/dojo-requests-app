@@ -137,8 +137,7 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 				var view=this;
 				// get the updates
 				var request = {};
-			//	view._saveRequest(request);
-				request = view._copyRequest(request);
+				request = view._copyRequest();
 			//	this.loadedStores.requestsListStore.add(request);
 				this.app.transitionToView(this.domNode, {
 					target: "requestItemDetails",
@@ -163,15 +162,10 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 				this.loadedStores.requestsListStore.add(request);
 				return request;
 			},
-			_copyRequest: function (copyreq){
-				var request={
-					"id": (Math.round(Math.random() * 1000000)).toString(),
-					"description": copyreq.description,
-					"requestType": copyreq.requestType,
-					"status": copyreq.status,
-					"priority": copyreq.priority
-				};
-				// we created a new id update navigation
+			_copyRequest: function (){
+				var request = {};
+				request.id = (Math.round(Math.random() * 1000000)).toString();
+				// get the rest of the values from the form
 				this._saveRequest(request);
 				this.loadedStores.requestsListStore.add(request);
 				return request;
