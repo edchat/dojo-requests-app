@@ -33,6 +33,6 @@ define({
 		phone: "Phone",
 		cancel: "Cancel",
 		ok: "Ok",
-		delete: "Delete"
+		remove: "Delete"
 	}
 });
