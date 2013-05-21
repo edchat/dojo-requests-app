@@ -79,9 +79,9 @@
 			}
 		},
 		"requestItemDetails":{
-			"controller" : "requestsApp/views/detail.js",
-			"template": "requestsApp/views/detail.html",
-			"nls": "requestsApp/nls/requestsDetail"
+			"controller" : "requestsApp/views/details.js",
+			"template": "requestsApp/views/details.html",
+			"nls": "requestsApp/nls/requestsDetails"
 		},
 		"requestListSearch":{
 			"controller" : "requestsApp/views/search.js",

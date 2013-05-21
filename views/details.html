@@ -2,27 +2,35 @@
 	<div data-dojo-type="dojox/mobile/Heading" data-dojo-props="fixed: 'top'">
 		<button data-dojo-type="dojox/mobile/ToolBarButton"
 				data-dojo-attach-point="backButton"
-				data-dojo-props="arrow: 'left'"
-				style="position: absolute; left: 0">${nls.list}</button>
+				data-dojo-props="arrow: 'left', target: 'requestList'"
+				style="position: absolute; left: 0"
+				class="backButton">${nls.requests}</button>
+		<button data-dojo-type="dojox/mobile/ToolBarButton" data-dojo-attach-point="cancelButton"
+				style="position: absolute; left: 0; display: 'none'"
+				data-dojo-props="target: 'requestItemDetails', transitionOptions: { params: { edit: false } }">${nls.cancel}</button>
 		${nls.details}
+		<button data-dojo-type="dojox/mobile/ToolBarButton" data-dojo-attach-point="editButton"
+				style="position: absolute; right: 0"
+				data-dojo-props="target: 'requestItemDetails', transitionOptions: { params: { } }"></button>
 	</div>
 	<div data-dojo-type="dojox/mobile/ScrollableView">
 			<div>
-					<button data-dojo-type="dojox/mobile/Button"
+			<!--		<button data-dojo-type="dojox/mobile/Button"
 						data-dojo-attach-point="saveButton" data-dojo-attach-event="onClick: _saveForm"
 						class="mblBlueButton" style="padding: 0 10px">${nls.save}</button>
+			-->
 					<button data-dojo-type="dojox/mobile/Button"
 						data-dojo-attach-point="copyButton" data-dojo-attach-event="onClick: _copyForm"
 						class="mblBlueButton" style="padding: 0 10px">${nls.copy}</button>
 			</div>
-		<div data-dojo-type="dojox/mobile/FormLayout">
+		<div data-dojo-type="dojox/mobile/FormLayout" data-dojo-attach-point="formLayout">
 			<div>
 				<label for="reqid">${nls.id}</label>
 				<fieldset>
 					<input id="reqid" name="id" data-dojo-type="dojox/mobile/TextArea"
 						   data-dojo-props="readOnly: true, placeHolder: '${nls.id}'" data-dojo-attach-point="reqid">
 					<button data-dojo-type="dojox/mobile/Button"
-						data-dojo-attach-point="deleteButton2" data-dojo-attach-event="onClick: _deleteRequest"
+						data-dojo-attach-point="deleteButton" data-dojo-attach-event="onClick: _deleteRequest"
 						class="mblRedButton" style="padding: 0 10px">${nls.remove}</button>
 				</fieldset>
 			</div>

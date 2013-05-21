@@ -5,6 +5,7 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 		var _dateOpener = false;
 		var _openerItem = null;
 		var _openerStore = null;
+		var _editMode = false;
 
 		var getStoreField=function (arr, type){
 			var index=array.indexOf(arr, function (item){
@@ -84,7 +85,9 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 				_openerItem = theItem;
 				_openerStore = theStore;
 				_dateOpener = dateOpener;
-
+				if(!_editMode){  // only show the opener in edit mode
+					return;
+				}
 				if(_dateOpener){
 					domClass.remove(this.datePicker2.domNode, "hidden");
 					domClass.add(this.checklist.domNode, "hidden");
@@ -113,6 +116,49 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 				// we show/hide the back button based on whether we are on tablet or phone layout, as we have two panes
 				// in tablet it makes no sense to get a back button
 				this.backButton.domNode.style.display=has("phone")?"":"none";
+				// are we in edit mode or not? if we are we need to slightly update the view for that
+				_editMode = this.params.edit;
+				// are we in create mode
+				var create = (typeof id === "undefined");
+				// change widgets readonly value based on that
+				query("input", this.domNode).forEach(function(node){
+					registry.byNode(node).set("readOnly", !_editMode);
+				});
+				// in edit mode change the label and params of the edit button
+				this.editButton.set("label", _editMode?this.nls.ok:this.nls.edit);
+				// put a listener to save the form when we are editing if there is no
+				if(!this._onHandler && _editMode){
+					this._onHandler = this.editButton.on("click", lang.hitch(this, this._saveForm));
+				}else if(this._onHandler && !_editMode){
+					this._onHandler.remove();
+					this._onHandler = null;
+				}
+				var editButtonOptions = this.editButton.transitionOptions;
+				editButtonOptions.params.edit = !_editMode;
+				// also update the edit & ok button to reference the currently displayed item
+				editButtonOptions.params.id = id;
+				var cancelButtonOptions = this.cancelButton.transitionOptions;
+				if(create){
+					// if we cancel we want to go back to main view
+					cancelButtonOptions.target = "requestList";
+					if(cancelButtonOptions.params.id){
+						delete cancelButtonOptions.params.id;
+					}
+				}else{
+					cancelButtonOptions.target = "requestItemDetails";
+					cancelButtonOptions.params.id = id;
+				}
+				// hide back button in edit mode
+				if(_editMode){
+					domClass.add(this.backButton.domNode, "hidden");
+					domClass.remove(this.formLayout.domNode, "mblFormLayoutReadOnly");
+				}else{
+					domClass.remove(this.backButton.domNode, "hidden");
+					domClass.add(this.formLayout.domNode, "mblFormLayoutReadOnly");
+				}
+				// cancel button must be shown in edit mode only, same for delete button if we are not creating a new contact
+				this.cancelButton.domNode.style.display = _editMode?"":"none";
+				this.deleteButton.domNode.style.display = (_editMode&&(typeof id !== "undefined"))?"":"none";
 
 				// let's fill the form with the currently selected contact
 				// if nothing selected skip that part
@@ -144,7 +190,7 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 			_initFieldValue: function (request, itemkey, itemstore){
 				var reqTypeVal = request?request[itemkey]:null;
 				if(reqTypeVal && itemstore){
-					var reqTypeLabel = itemstore.get(reqTypeVal).description;
+					var reqTypeLabel = itemstore.get(reqTypeVal)?itemstore.get(reqTypeVal).description:reqTypeVal;
 					dom.byId(itemkey).value = reqTypeLabel?reqTypeLabel:null;
 				}else{
 					dom.byId(itemkey).value = request?request[itemkey]:null;
@@ -263,12 +309,23 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 					request[reqfield]=value;
 				}
 			},
-
+			_hideEmptyFields: function(view){
+				query(".readOnlyHidden", view.formLayout.domNode).forEach(function(node){
+					domClass.remove(node, "readOnlyHidden");
+				});
+				query("input", view.formLayout.domNode).forEach(function(node){
+					var val = registry.byNode(node).get("value");
+					if(!val && node.parentNode.parentNode && node.id !== "firstname" && node.id !== "lastname"){
+						domClass.add(node.parentNode.parentNode, "readOnlyHidden");
+					}
+				});
+			},
 			_deleteRequest: function (){
-				var reqid = this.params.id || this.reqid.get("value");
-				this.loadedStores.requestsListStore.remove(reqid);
+			var view = this;
+			when(this.loadedStores.requestsListStore.remove(this.params.id.toString()), function(){
 				// we want to be back to list
-				this.app.transitionToView(this.domNode, { target: "requestList" });
-			}
+				view.app.transitionToView(view.domNode, { target: 'requestList', reverse: 'true' });
+			});
 		}
-	});
+	}
+});

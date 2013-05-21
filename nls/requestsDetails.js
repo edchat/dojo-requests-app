@@ -25,6 +25,7 @@ define({
 		details: "Details",
 		mail: "E-mail",
 		phone: "Phone",
+		edit: "Edit",
 		cancel: "Cancel",
 		ok: "Ok",
 		remove: "Delete"
