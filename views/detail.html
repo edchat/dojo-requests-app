@@ -29,8 +29,11 @@
 			<div>
 				<label for="requestType">${nls.requestType}</label>
 				<fieldset>
-					<select id="requestType">
-					</select>
+				<!--	<select id="requestType">
+					</select> -->
+					<input id="requestType" name="requestType" data-dojo-type="dojox/mobile/TextArea"
+						   data-dojo-props="readOnly: true, placeHolder: '${nls.requestType}'" data-dojo-attach-point="requestType">
+
 				</fieldset>
 			</div>
 
@@ -44,13 +47,15 @@
 			<div>
 				<label for="status">${nls.status}</label>
 	   			<fieldset>
-					<select id="status"></select>
+					<input id="status" name="status" data-dojo-type="dojox/mobile/TextArea"
+						   data-dojo-props="readOnly: true, placeHolder: '${nls.status}'" data-dojo-attach-point="status">
 	   			</fieldset>
 		   </div>
 			<div>
 				<label for="priority">${nls.priority}</label>
 	   			<fieldset>
-					<select id="priority"></select>
+					<input id="priority" name="priority" data-dojo-type="dojox/mobile/TextArea"
+						   data-dojo-props="readOnly: true, placeHolder: '${nls.priority}'" data-dojo-attach-point="priority">
 	   			</fieldset>
 		   </div>
 			<div>
@@ -86,11 +91,8 @@
 				<fieldset>
 					<input id="estimatedUnits" name="estimatedUnits" data-dojo-type="dojox/mobile/TextArea"
 						   data-dojo-props="placeHolder: '${nls.estimatedUnits}'" data-dojo-attach-point="estimatedUnits">
-					<select id="unitType"></select>
-				<!--
-					<input id="unitType" name="unitType" data-dojo-type="dojox/mobile/ComboBox"
-						   data-dojo-props="store: this.loadedStores.requestUnitTypeStore, placeHolder: '${nls.unitType}', searchAttr: 'id'" data-dojo-attach-point="unitType">
-				-->
+					<input id="unitType" name="unitType" data-dojo-type="dojox/mobile/TextArea"
+						   data-dojo-props="readOnly: true, placeHolder: '${nls.unitType}'" data-dojo-attach-point="unitType">
 				</fieldset>
 			</div>
 			<div>
@@ -109,8 +111,9 @@
 			</div>
 		</div>
 	</div>
-	<div id="opener" data-dojo-attach-point="opener" data-dojo-type="dojox/mobile/Opener">
-		<h1 data-dojo-type="dojox/mobile/Heading" label="Date Picker">
+	<div id="opener" data-dojo-attach-point="opener" data-dojo-type="dojox/mobile/Opener" data-dojo-type="dojox.mobile.Opener"
+		 data-dojo-props="onBlur:function(){ return true; }">
+		<h1 data-dojo-attach-point="openerHeader" data-dojo-type="dojox/mobile/Heading" label="Date Picker">
 			<span data-dojo-type="dojox/mobile/ToolBarButton" data-dojo-attach-point="save"
 				data-dojo-props="label:'Done'" class="mblColorBlue"
 				style="position:absolute;width:45px;right:0;">
@@ -121,6 +124,10 @@
 			</span>
 		</h1>
 		<div data-dojo-attach-point="datePicker2" data-dojo-type="dojox/mobile/DatePicker"></div>
-	</div>
 
+		<ul data-dojo-attach-point="checklist" data-dojo-type="dojox/mobile/RoundRectStoreList"
+			data-dojo-props="store: this.loadedStores.requestTypeStore, labelProperty: 'description', select:'single'">
+		</ul>
+
+	</div>
 </div>

@@ -17,6 +17,7 @@
 		"dojox/mobile/ComboBox",
 		"dojox/mobile/RoundRectStoreList",
 		"dojox/mobile/EdgeToEdgeCategory",
+		"dojox/mobile/RoundRectStoreList",
 		"dojox/mobile/Opener",
 		"dojox/mobile/ToolBarButton",
 		"dojox/mobile/DatePicker",

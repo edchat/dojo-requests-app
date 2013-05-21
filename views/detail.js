@@ -1,7 +1,10 @@
-define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct", "dojo/has", "dojo/when", "dojo/query", "dijit/registry", "dojo/on", "dojo/date/stamp",
+define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct", "dojo/dom-class", "dojo/has", "dojo/when", "dojo/query", "dijit/registry", "dojo/on", "dojo/date/stamp",
 	"dojox/mobile/Button", "dojox/mobile/FormLayout", "dojox/mobile/TextArea"],
-	function (array, lang, dom, domConstruct, has, when, query, registry, on, stamp, Select, ObjectStore){
+	function (array, lang, dom, domConstruct, domClass, has, when, query, registry, on, stamp, Select, ObjectStore){
 		var _onResults = []; // events on array
+		var _dateOpener = false;
+		var _openerItem = null;
+		var _openerStore = null;
 
 		var getStoreField=function (arr, type){
 			var index=array.indexOf(arr, function (item){
@@ -30,15 +33,39 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 
 				opener = this.opener;
 				var onResult = on(this.requestedFinishDate, "click", lang.hitch(this, function(){
-					this.datePicker2.set("value", this.requestedFinishDate.get("value"));
-					this.opener.show(this.requestedFinishDate.domNode, ['below-centered','above-centered','after','before']);
+					this._setupOpener(this.requestedFinishDate, true, null);
 				}));
 				_onResults.push(onResult);
 
+				var onResult = on(this.requestType, "click", lang.hitch(this, function(){
+					this._setupOpener(this.requestType, false, this.loadedStores.requestTypeStore);
+				}));
+
+				var onResult = on(this.status, "click", lang.hitch(this, function(){
+					this._setupOpener(this.status, false, this.loadedStores.requestStatusStore);
+				}));
+
+				var onResult = on(this.priority, "click", lang.hitch(this, function(){
+					this._setupOpener(this.priority, false, this.loadedStores.requestPriorityStore);
+				}));
+
+				var onResult = on(this.unitType, "click", lang.hitch(this, function(){
+					this._setupOpener(this.unitType, false, this.loadedStores.requestUnitTypeStore);
+				}));
+
 				onResult = on(this.save, "click", lang.hitch(this, function(){
 					this.opener.hide(true);
-					date = this.datePicker2.get("value");
-					this.requestedFinishDate.set("value",date);
+					if(_dateOpener){
+						date = this.datePicker2.get("value");
+						_openerItem.set("value",date);
+					}else{
+						var selVal = "";
+						query(".mblListItemChecked", this.checklist.domNode).forEach(function(node){
+							//domClass.remove(node, "readOnlyHidden");
+							selVal = lang.trim(node.innerText || node.textContent || '');
+						});
+						_openerItem.set("value",selVal);
+					}
 				}));
 				_onResults.push(onResult);
 
@@ -51,6 +78,32 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 
 				// initialize the global Date variable as today
 				date = stamp.toISOString(new Date(), {selector: "date"});
+			},
+
+			_setupOpener: function (theItem, dateOpener, theStore){
+				_openerItem = theItem;
+				_openerStore = theStore;
+				_dateOpener = dateOpener;
+
+				if(_dateOpener){
+					domClass.remove(this.datePicker2.domNode, "hidden");
+					domClass.add(this.checklist.domNode, "hidden");
+					this.openerHeader.set("label","Date Picker");
+					this.datePicker2.set("value", _openerItem.get("value"));
+				}else{
+					domClass.add(this.datePicker2.domNode, "hidden");
+					domClass.remove(this.checklist.domNode, "hidden");
+					this.openerHeader.set("label","Select");
+					this.checklist.setStore(_openerStore);
+
+					var selval = _openerItem.get("value");
+					array.some(this.checklist.getChildren(), function(child){
+						if(child.label == selval){
+							child.set("checked",true);
+						}
+					});
+				}
+				this.opener.show(_openerItem.domNode, ['below-centered','above-centered','after','before']);
 			},
 
 			beforeActivate: function (previousView){
@@ -72,45 +125,58 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 				}
 				when(promise, function (request){
 					view.reqid.set("value", request?request.id:null);
-					dom.byId("requestType").value = request?request.requestType:null;
+					view._initFieldValue(request, "requestType", view.loadedStores.requestTypeStore);
 					view.description.set("value", request?request.label:null);
-					dom.byId("status").value = request?request.status:null;
-					dom.byId("priority").value = request?request.priority:null;
+					view._initFieldValue(request, "status", view.loadedStores.requestStatusStore);
+					view._initFieldValue(request, "priority", view.loadedStores.requestPriorityStore);
+
 					view.requestedBy.set("value", request?request.requestedBy:null);
 					view.requestedFinishDate.set("value", request?request.requestedFinishDate:null);
 					view.assignedTo.set("value", request?request.assignedTo:null);
 					view.actualFinishDate.set("value", request?request.actualFinishDate:null);
 					view.estimatedUnits.set("value", request?request.estimatedUnits:null);
-					dom.byId("unitType").value = request?request.unitType:null;
+					view._initFieldValue(request, "unitType", view.loadedStores.requestUnitTypeStore);
 					view.createdDate.set("value", request?request.createdDate:null);
 					view.updatedDate.set("value", request?request.updatedDate:null);
 				});
 			},
+
+			_initFieldValue: function (request, itemkey, itemstore){
+				var reqTypeVal = request?request[itemkey]:null;
+				if(reqTypeVal && itemstore){
+					var reqTypeLabel = itemstore.get(reqTypeVal).description;
+					dom.byId(itemkey).value = reqTypeLabel?reqTypeLabel:null;
+				}else{
+					dom.byId(itemkey).value = request?request[itemkey]:null;
+				}
+
+			},
+
 			_initSelectOptions: function (){
 				//setup requestType select here:
-				array.forEach(this.loadedStores.requestTypeStore.data, function(child){
-					domConstruct.create("option", {
-					            value: child.id, label: child.description
-					        }, dom.byId("requestType"));
-				});
+			//	array.forEach(this.loadedStores.requestTypeStore.data, function(child){
+			//		domConstruct.create("option", {
+			//		            value: child.id, label: child.description
+			//		        }, dom.byId("requestType"));
+			//	});
 				//setup status select here:
-				array.forEach(this.loadedStores.requestStatusStore.data, function(child){
-					domConstruct.create("option", {
-					            value: child.id, label: child.description
-					        }, dom.byId("status"));
-				});
+			//	array.forEach(this.loadedStores.requestStatusStore.data, function(child){
+			//		domConstruct.create("option", {
+			//		            value: child.id, label: child.description
+			//		        }, dom.byId("status"));
+			//	});
 				//setup priority select here:
-				array.forEach(this.loadedStores.requestPriorityStore.data, function(child){
-					domConstruct.create("option", {
-					            value: child.id, label: child.description
-					        }, dom.byId("priority"));
-				});
+			//	array.forEach(this.loadedStores.requestPriorityStore.data, function(child){
+			//		domConstruct.create("option", {
+			//		            value: child.id, label: child.description
+			//		        }, dom.byId("priority"));
+			//	});
 				//setup unitType select here:
-				array.forEach(this.loadedStores.requestUnitTypeStore.data, function(child){
-					domConstruct.create("option", {
-					            value: child.id, label: child.description
-					        }, dom.byId("unitType"));
-				});
+			//	array.forEach(this.loadedStores.requestUnitTypeStore.data, function(child){
+			//		domConstruct.create("option", {
+			//		            value: child.id, label: child.description
+			//		        }, dom.byId("unitType"));
+			//	});
 			},
 
 			_saveForm: function (){
