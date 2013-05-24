@@ -1,20 +1,20 @@
 {
-	"identifier": "id",
+	"identifier": "key",
 	"items": [
 		{
-			"id": "hours",
+			"key": "hours",
 			"description": "Units in hours"
 		},
 		{
-			"id": "days",
+			"key": "days",
 			"description": "Units in days"
 		},
 		{
-			"id": "weeks",
+			"key": "weeks",
 			"description": "Units in weeks"
 		},
 		{
-			"id": "months",
+			"key": "months",
 			"description": "Units in months"
 		}
 	]

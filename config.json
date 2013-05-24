@@ -64,6 +64,12 @@
 			"params": {
 				"data": "requestsApp.requestsUnitTypeData"
       		}
+		},
+		"searchFieldsStore":{
+			"type": "dojo/store/Memory",
+			"params": {
+				"data": "requestsApp.searchFieldsData"
+			}
   		}
 	},
 	"views": {

@@ -1,12 +1,12 @@
 {
-	"identifier": "id",
+	"identifier": "key",
 	"items": [
 		{
-			"id": "open",
+			"key": "open",
 			"description": "An Open Request"
 		},
 		{
-			"id": "closed",
+			"key": "closed",
 			"description": "A Closed Request"
 		}
 	]

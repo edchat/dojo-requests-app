@@ -13,7 +13,6 @@
 	display: none !important;
 }
 
-
 .mblFormLayout {
 	margin: 8px;
 	background-color: rgba(0, 0, 0, 0);
@@ -28,15 +27,17 @@
 	display: none !important;
 }
 
-.mblFormLayoutReadOnly .mblTextArea {
+.mblFormLayoutReadOnly .mblTextArea,
+.mblFormLayoutReadOnly .mblTextBox {
 	background-color: rgba(0, 0, 0, 0);
-/*	background-color: #d3d3d3; */
 	border-width: 0px;
 }
-.android_theme .mblFormLayoutReadOnly .mblTextArea {
+.android_theme .mblFormLayoutReadOnly .mblTextArea,
+.android_theme .mblFormLayoutReadOnly .mblTextBox {
 	background-color: #d3d3d3;
 }
 
-.mblFormLayout .mblTextArea {
+.mblFormLayout .mblTextArea,
+.mblFormLayout .mblTextBox {
 	font-weight: bold;
 }

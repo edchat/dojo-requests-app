@@ -4,16 +4,18 @@
 	</script>
 	<div data-dojo-type="dojox/mobile/Heading" data-dojo-props="fixed: 'top'">
 		${nls.requests}
-	<!--
+
 		<button data-dojo-type="dojox/mobile/ToolBarButton" style="position: absolute; right: 0"
-				data-dojo-props="target: 'requestItemDetails'"
+				data-dojo-attach-point="createButton"
 				data-dojo-attach-point="add">${nls.add}</button>
-	-->
+
 	</div>
 	<button data-dojo-type="dojox/mobile/Button"
 		data-dojo-attach-point="searchButton" class="mblBlueButton">${nls.search}</button>
+<!--
 	<button data-dojo-type="dojox/mobile/Button"
-		data-dojo-attach-point="createButton" data-dojo-props="target: 'requestItemDetails'" class="mblBlueButton">${nls.create}</button>
+		data-dojo-attach-point="createButton2" data-dojo-props="target: 'requestItemDetails'" class="mblBlueButton">${nls.create}</button>
+-->
 	<div data-dojo-type="dojox/mobile/EdgeToEdgeStoreList"
 			 data-dojo-attach-point="requests" id="requestsList"
 			 data-dojo-props="store: this.loadedStores.requestsListStore,

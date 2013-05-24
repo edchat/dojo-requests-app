@@ -20,7 +20,7 @@
 		{
 			"id": 101,
 			"requestType": "service",
-			"label": "Description text for id=101",
+			"label": "Zippy Description text for id=101",
 			"status": "open",
 			"priority": "2-medium",
 			"requestedBy": "jsmith@gmail.com",
@@ -36,8 +36,8 @@
 		{
 			"id": 102,
 			"requestType": "consulting",
-			"label": "Description text for id=102",
-			"status": "closed",
+			"label": "A Description text for id=102",
+			"status": "close",
 			"priority": "2-medium",
 			"requestedBy": "sdoe@gmail.com",
 			"requestedFinishDate": "2013-03-20",

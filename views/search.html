@@ -16,8 +16,11 @@
 			<div>
 				<label for="srchreqid">${nls.id}</label>
 				<fieldset>
-					<select id="srchreqid"></select>
+					<input id="srchreqid" name="srchreqid" data-dojo-type="dojox/mobile/TextArea"
+						   data-dojo-props="readOnly: true, placeHolder: '${nls.id}'" data-dojo-attach-point="srchreqid">
+
 				<!--
+					<select id="srchreqid"></select>
 					<input id="srchreqid" name="srchreqid" data-dojo-type="dojox/mobile/TextArea"
 						   data-dojo-props="placeHolder: '${nls.id}'" data-dojo-attach-point="srchreqid">
 				-->
@@ -26,7 +29,9 @@
 			<div>
 				<label for="srchstatus">${nls.status}</label>
 	   			<fieldset>
-					<select id="srchstatus"></select>
+					<input id="srchstatus" name="srchstatus" data-dojo-type="dojox/mobile/TextArea"
+						   data-dojo-props="readOnly: true, placeHolder: '${nls.status}'" data-dojo-attach-point="srchstatus">
+		<!--		<select id="srchstatus"></select> -->
 	   			</fieldset>
 		   </div>
 			<div>
@@ -90,26 +95,32 @@
 			<div>
 				<label for="srchfirstSort">${nls.firstSort}</label>
 				<fieldset>
+					<input id="srchfirstSort" name="srchfirstSort" data-dojo-type="dojox/mobile/TextArea"
+						   data-dojo-props="readOnly: true, placeHolder: '${nls.firstSort}'" data-dojo-attach-point="srchfirstSort">
+					<!--
 					<select id="srchfirstSort"></select>
-				<!--
 					<input id="srchfirstSort" name="firstSort" data-dojo-type="dojox/mobile/TextArea"
 						   data-dojo-props="placeHolder: '${nls.firstSort}'" data-dojo-attach-point="srchfirstSort">
-				-->
 					<select id="srchfirstSortDir"></select>
+				-->
+					<input id="srchfirstSortDir" name="srchfirstSortDir" data-dojo-type="dojox/mobile/TextArea"
+						   data-dojo-props="readOnly: true, placeHolder: '${nls.firstSortDir}'" data-dojo-attach-point="srchfirstSortDir">
 				</fieldset>
 			</div>
 			<div>
 				<label for="srchsecondSort">${nls.secondSort}</label>
 				<fieldset>
-					<select id="srchsecondSort"></select>
-					<select id="srchsecondSortDir"></select>
+					<input id="srchsecondSort" name="srchsecondSort" data-dojo-type="dojox/mobile/TextArea"
+						   data-dojo-props="readOnly: true, placeHolder: '${nls.secondSort}'" data-dojo-attach-point="srchsecondSort">
+					<input id="srchsecondSortDir" name="srchsecondSortDir" data-dojo-type="dojox/mobile/TextArea"
+						   data-dojo-props="readOnly: true, placeHolder: '${nls.secondSortDir}'" data-dojo-attach-point="srchsecondSortDir">
 				</fieldset>
 			</div>
 		</div>
 
 	</div>
-	<div id="srchopener" data-dojo-attach-point="srchopener" data-dojo-type="dojox/mobile/Opener">
-		<h1 data-dojo-type="dojox/mobile/Heading" label="Date Picker">
+	<div id="srchopener" data-dojo-attach-point="srchopener" data-dojo-type="dojox/mobile/Opener" style="min-width: 240px;">
+		<h1 data-dojo-type="dojox/mobile/Heading" data-dojo-attach-point="openerHeader" label="Date Picker">
 			<span data-dojo-type="dojox/mobile/ToolBarButton" data-dojo-attach-point="save"
 				data-dojo-props="label:'Done'" class="mblColorBlue"
 				style="position:absolute;width:45px;right:0;">
@@ -120,6 +131,15 @@
 			</span>
 		</h1>
 		<div data-dojo-attach-point="srchdatePicker2" data-dojo-type="dojox/mobile/DatePicker"></div>
+		<div dojoType="dojox/mobile/ScrollableView" selected="true" height="auto">
+			<ul data-dojo-attach-point="srchchecklist" data-dojo-type="dojox/mobile/RoundRectStoreList"
+				data-dojo-props=" labelProperty: 'description', select:'single'">
+			</ul>
+			<ul data-dojo-attach-point="srchsortlist" data-dojo-type="dojox/mobile/RoundRectStoreList"
+				data-dojo-props="store: this.app.loadedStores.searchFieldsStore, select:'single'">
+			</ul>
+		</div>
+
 	</div>
 
 </div>

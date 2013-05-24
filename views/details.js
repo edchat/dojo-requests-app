@@ -24,11 +24,41 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 		return {
 			init: function(){
 
-				this._initSelectOptions();
-
 				this.backButton.on("click", lang.hitch(this, function(){
 					this.app.transitionToView(this.domNode, {
-						target: 'requestList', reverse: 'true'
+						target: 'requestList', params: 'true'
+					});
+				}));
+
+				this.editButton.on("click", lang.hitch(this, function(){
+					var id=this.params.id;
+					var editparm = true;
+					if(_editMode){
+						this._saveForm();
+						editparm = false;
+					}
+					// are we in create mode
+					var create = (typeof id === "undefined");
+					if(!create){
+						this.app.transitionToView(this.domNode, {
+							target: "requestItemDetails",
+							params: {
+								edit: editparm,
+								id: id
+							}
+						});
+					}
+				}));
+
+				this.cancelButton.on("click", lang.hitch(this, function(){
+					var id=this.params.id;
+					var target = id?"requestItemDetails":"requestList"
+					this.app.transitionToView(this.domNode, {
+						target: target,
+						params: {
+							edit: false,
+							id: id
+						}
 					});
 				}));
 
@@ -54,6 +84,25 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 					this._setupOpener(this.unitType, false, this.loadedStores.requestUnitTypeStore);
 				}));
 
+				this.checklist.on("click", lang.hitch(this, function(e){
+						this.opener.hide(true);
+						if(_dateOpener){
+							date = this.datePicker2.get("value");
+							_openerItem.set("value",date);
+						}else{
+							var selVal = "";
+							query(".mblListItemChecked", this.checklist.domNode).forEach(function(node){
+								//domClass.remove(node, "readOnlyHidden");
+								selVal = lang.trim(node.innerText || node.textContent || '');
+							});
+							_openerItem.set("value",selVal);
+							var test = _openerStore.query({description: selVal});
+							if(test){
+								_openerItem.valueStoreKey=test[0].key;
+							}
+						}
+				}));
+
 				onResult = on(this.save, "click", lang.hitch(this, function(){
 					this.opener.hide(true);
 					if(_dateOpener){
@@ -62,7 +111,6 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 					}else{
 						var selVal = "";
 						query(".mblListItemChecked", this.checklist.domNode).forEach(function(node){
-							//domClass.remove(node, "readOnlyHidden");
 							selVal = lang.trim(node.innerText || node.textContent || '');
 						});
 						_openerItem.set("value",selVal);
@@ -75,8 +123,6 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 				}));
 				_onResults.push(onResult);
 
-			//	query('input,textarea,select', theFormNode).on('change', function(e) { .. handle event here .. see e.currentTarget or e.target })
-
 				// initialize the global Date variable as today
 				date = stamp.toISOString(new Date(), {selector: "date"});
 			},
@@ -88,15 +134,19 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 				if(!_editMode){  // only show the opener in edit mode
 					return;
 				}
+				this.openerHeader.set("label",_openerItem.get("placeHolder"));
 				if(_dateOpener){
 					domClass.remove(this.datePicker2.domNode, "hidden");
+					domClass.remove(this.save.domNode, "hidden");
+					domClass.remove(this.cancel.domNode, "hidden");
 					domClass.add(this.checklist.domNode, "hidden");
-					this.openerHeader.set("label","Date Picker");
-					this.datePicker2.set("value", _openerItem.get("value"));
+					var dateval = _openerItem.get("value") || stamp.toISOString(new Date(), {selector: "date"});
+					this.datePicker2.set("value", dateval);
 				}else{
 					domClass.add(this.datePicker2.domNode, "hidden");
+					domClass.add(this.save.domNode, "hidden");
+					domClass.add(this.cancel.domNode, "hidden");
 					domClass.remove(this.checklist.domNode, "hidden");
-					this.openerHeader.set("label","Select");
 					this.checklist.setStore(_openerStore);
 
 					var selval = _openerItem.get("value");
@@ -116,38 +166,19 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 				// we show/hide the back button based on whether we are on tablet or phone layout, as we have two panes
 				// in tablet it makes no sense to get a back button
 				this.backButton.domNode.style.display=has("phone")?"":"none";
-				// are we in edit mode or not? if we are we need to slightly update the view for that
-				_editMode = this.params.edit;
 				// are we in create mode
 				var create = (typeof id === "undefined");
+				// are we in edit mode or not? if we are we need to slightly update the view for that
+				_editMode = (this.params.edit && this.params.edit !== "false") || create;
 				// change widgets readonly value based on that
 				query("input", this.domNode).forEach(function(node){
-					registry.byNode(node).set("readOnly", !_editMode);
+					if(node.id !== "reqid"){
+						registry.byNode(node).set("readOnly", !_editMode);
+					}
 				});
 				// in edit mode change the label and params of the edit button
 				this.editButton.set("label", _editMode?this.nls.ok:this.nls.edit);
-				// put a listener to save the form when we are editing if there is no
-				if(!this._onHandler && _editMode){
-					this._onHandler = this.editButton.on("click", lang.hitch(this, this._saveForm));
-				}else if(this._onHandler && !_editMode){
-					this._onHandler.remove();
-					this._onHandler = null;
-				}
-				var editButtonOptions = this.editButton.transitionOptions;
-				editButtonOptions.params.edit = !_editMode;
-				// also update the edit & ok button to reference the currently displayed item
-				editButtonOptions.params.id = id;
-				var cancelButtonOptions = this.cancelButton.transitionOptions;
-				if(create){
-					// if we cancel we want to go back to main view
-					cancelButtonOptions.target = "requestList";
-					if(cancelButtonOptions.params.id){
-						delete cancelButtonOptions.params.id;
-					}
-				}else{
-					cancelButtonOptions.target = "requestItemDetails";
-					cancelButtonOptions.params.id = id;
-				}
+
 				// hide back button in edit mode
 				if(_editMode){
 					domClass.add(this.backButton.domNode, "hidden");
@@ -184,6 +215,9 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 					view._initFieldValue(request, "unitType", view.loadedStores.requestUnitTypeStore);
 					view.createdDate.set("value", request?request.createdDate:null);
 					view.updatedDate.set("value", request?request.updatedDate:null);
+					if(!_editMode){
+						view._hideEmptyFields(view);
+					}
 				});
 			},
 
@@ -198,33 +232,6 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 
 			},
 
-			_initSelectOptions: function (){
-				//setup requestType select here:
-			//	array.forEach(this.loadedStores.requestTypeStore.data, function(child){
-			//		domConstruct.create("option", {
-			//		            value: child.id, label: child.description
-			//		        }, dom.byId("requestType"));
-			//	});
-				//setup status select here:
-			//	array.forEach(this.loadedStores.requestStatusStore.data, function(child){
-			//		domConstruct.create("option", {
-			//		            value: child.id, label: child.description
-			//		        }, dom.byId("status"));
-			//	});
-				//setup priority select here:
-			//	array.forEach(this.loadedStores.requestPriorityStore.data, function(child){
-			//		domConstruct.create("option", {
-			//		            value: child.id, label: child.description
-			//		        }, dom.byId("priority"));
-			//	});
-				//setup unitType select here:
-			//	array.forEach(this.loadedStores.requestUnitTypeStore.data, function(child){
-			//		domConstruct.create("option", {
-			//		            value: child.id, label: child.description
-			//		        }, dom.byId("unitType"));
-			//	});
-			},
-
 			_saveForm: function (){
 				var id=this.params.id || this.reqid.get("value");
 				var view=this;
@@ -235,6 +242,12 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 					if(!request){
 						request=view._createRequest();
 						view.reqid.set("value", request?request.id:null);
+						view.app.transitionToView(view.domNode, {
+							target: "requestItemDetails",
+							params: {
+								id: request.id
+							}
+						});
 					} else{
 						// otherwise update it
 						view._saveRequest(request);
@@ -250,15 +263,12 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 				// get the updates
 				var request = {};
 				request = view._copyRequest();
-			//	this.loadedStores.requestsListStore.add(request);
 				this.app.transitionToView(this.domNode, {
 					target: "requestItemDetails",
 					params: {
 						id: request.id
 					}
 				});
-			//	var list = this.app.children.requestsApp_requestList;
-			//	list.selectItemById(request.id);
 			},
 			_createRequest: function (){
 				var request={
@@ -287,7 +297,7 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 				// deal with description first
 				this._setRequestValue(this.description, request, "label");
 				this._setRequestValueFromDom("requestType", request, "requestType");
-				this._setRequestValueFromDom("status", request, "status");
+				this._setRequestValue(this.status, request, "status");
 				this._setRequestValueFromDom("priority", request, "priority");
 				this._setRequestValue(this.requestedBy, request, "requestedBy");
 				this._setRequestValue(this.requestedFinishDate, request, "requestedFinishDate");
@@ -298,7 +308,7 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 				this._setRequestValue(this.updatedDate, request, "updatedDate");
 			},
 			_setRequestValue: function (widget, request, reqfield){
-				var value = widget.get("value");
+				var value = widget.get("valueStoreKey") || widget.get("value");
 				if(typeof value !== "undefined"){
 					request[reqfield]=value;
 				}
