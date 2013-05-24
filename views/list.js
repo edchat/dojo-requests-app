@@ -22,7 +22,10 @@ define(["dojo/_base/declare", "dojo/_base/lang", "dojo/_base/array", "dojo/has",
 			var view = this;
 			this.requests.on("add", lang.hitch(this, function(item){
 				// select the newly added element
-				this.selectItemById(item.id);
+				if(!has("phone")){
+					this.requests.deselectAll();
+					this.selectItemById(item.id);
+				}
 			}));
 		//	this.add.on("click", function(){
 		//		view.requests.deselectAll();

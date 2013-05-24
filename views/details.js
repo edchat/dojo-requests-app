@@ -170,12 +170,15 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 				var create = (typeof id === "undefined");
 				// are we in edit mode or not? if we are we need to slightly update the view for that
 				_editMode = (this.params.edit && this.params.edit !== "false") || create;
+
 				// change widgets readonly value based on that
 				query("input", this.domNode).forEach(function(node){
-					if(node.id !== "reqid"){
+					if(registry.byNode(node) && node.id !== "reqid" && !registry.byNode(node).usesOpener){
 						registry.byNode(node).set("readOnly", !_editMode);
 					}
 				});
+				this.description.set("readOnly", !_editMode);  // also set it for the description
+
 				// in edit mode change the label and params of the edit button
 				this.editButton.set("label", _editMode?this.nls.ok:this.nls.edit);
 

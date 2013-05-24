@@ -58,6 +58,11 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 				_onResults.push(onResult);
 
 				var onResult = on(this.srchreqid, "click", lang.hitch(this, function(){
+					var iddata = [{"description":"Any"}];
+					array.forEach(this.loadedStores.requestsListStore.data, function(child){
+						iddata.push({"description":child.id, "key":child.id});
+					});
+					_idSearchStore = new Memory({data: iddata});
 					this._setupOpener(this.srchreqid, "search", _idSearchStore);
 				}));
 

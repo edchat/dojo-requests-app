@@ -34,6 +34,10 @@
 }
 .android_theme .mblFormLayoutReadOnly .mblTextArea,
 .android_theme .mblFormLayoutReadOnly .mblTextBox {
+.holodark_theme .mblFormLayoutReadOnly .mblTextArea,
+.holodark_theme .mblFormLayoutReadOnly .mblTextBox {
+.windows_theme .mblFormLayoutReadOnly .mblTextArea,
+.windows_theme .mblFormLayoutReadOnly .mblTextBox {
 	background-color: #d3d3d3;
 }
 
