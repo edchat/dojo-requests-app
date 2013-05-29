@@ -1,7 +1,11 @@
-<div class="leftpanel mblBackground">
+<div class="view mblView leftpanel mblBackground">
+		<!--<div class="leftpanel mblBackground"> -->
+
+
 	<script type="dojo/require">
 		has: "dojo/has"
 	</script>
+		<div data-dojo-type="dojox/mobile/ScrollableView">
 	<div data-dojo-type="dojox/mobile/Heading" data-dojo-props="fixed: 'top'">
 		${nls.requests}
 
@@ -18,6 +22,7 @@
 -->
 	<div data-dojo-type="dojox/mobile/EdgeToEdgeStoreList"
 			 data-dojo-attach-point="requests" id="requestsList"
-			 data-dojo-props="store: this.loadedStores.requestsListStore,
+			 data-dojo-props="store: this.loadedStores.requestsListStore, app: this.app,
 			 itemRenderer: this.RequestListItem, stateful: !has('phone')"></div>
+	</div>
 </div>

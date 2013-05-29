@@ -1,10 +1,17 @@
-<div>
+<div class="view mblView">
+
+	<div data-dojo-type="dojox/mobile/ScrollableView">
+<!--<div  data-dojo-attach-point="detailsOuterDiv"  class="center">
+	<div data-dojo-type="dojox/app/widgets/Container" data-dojo-attach-point="detailsOuterContainer" data-app-constraint="center" data-dojo-props="scrollable: true">
+-->
+<!--		<div data-dojo-type="dojox/mobile/ScrollableView"> -->
+
 	<div data-dojo-type="dojox/mobile/Heading" data-dojo-props="fixed: 'top'">
 		<button data-dojo-type="dojox/mobile/ToolBarButton"
 				data-dojo-attach-point="backButton"
-				data-dojo-props="arrow: 'left', target: 'requestList'"
-				style="position: absolute; left: 0"
-				class="backButton">${nls.requests}</button>
+				data-dojo-props="arrow: 'left'"
+				style="position: absolute; left: 0; display: none;"
+				class="backbutton showOnPhone">${nls.requests}</button>
 		<button data-dojo-type="dojox/mobile/ToolBarButton" data-dojo-attach-point="cancelButton"
 				style="position: absolute; left: 0; display: 'none'">${nls.cancel}</button>
 		${nls.details}
@@ -141,6 +148,7 @@
 			</div>
 		</div>
 	</div>
+	</div>
 	<div id="opener" data-dojo-attach-point="opener" data-dojo-type="dojox/mobile/Opener" data-dojo-type="dojox.mobile.Opener"
 		 data-dojo-props="onBlur:function(){ return true; }">
 		<h1 data-dojo-attach-point="openerHeader" data-dojo-type="dojox/mobile/Heading" label="Date Picker">
@@ -161,4 +169,5 @@
 		</ul>
 
 	</div>
+
 </div>

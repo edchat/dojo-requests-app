@@ -30,6 +30,26 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 			activeDateField : null,
 			init: function(){
 
+					this.backButton.on("click", lang.hitch(this, function(){
+					if(has("phone")){
+						console.log("need to find list view and update css...");
+						if(this.app.children.requestsApp_requestList){
+							this.app.children.requestsApp_requestList.constraint = "center";
+							domClass.remove(this.app.children.requestsApp_requestList.domNode, "left");
+							domClass.add(this.app.children.requestsApp_requestList.domNode, "center");
+						}
+					}else{
+						if(this.app.children.requestsApp_requestList){
+							this.app.children.requestsApp_requestList.constraint = "left";
+							domClass.remove(this.app.children.requestsApp_requestList.domNode, "center");
+							domClass.add(this.app.children.requestsApp_requestList.domNode, "left");
+						}
+					}
+					this.app.transitionToView(this.domNode, {
+						target: 'requestList', params: {reverse : true}
+					});
+				}));
+
 				// setup _sortDirStore
 				var _sortDirdata = {"identifier": "key","items":[{key: "ascending", label: "Ascending"}, {key: "descending", label: "Descending"}]};
 				_sortDirStore = new Memory({data: _sortDirdata});
@@ -331,6 +351,12 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 
 					}else{
 						// transition
+						if(this.app.children.requestsApp_requestList){
+							this.app.children.requestsApp_requestList.constraint = "center";
+							domClass.remove(this.app.children.requestsApp_requestList.domNode, "left");
+							domClass.add(this.app.children.requestsApp_requestList.domNode, "center");
+						}
+
 						this.app.transitionToView(this.domNode, {
 							target: "requestList"
 						});

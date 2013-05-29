@@ -25,8 +25,22 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 			init: function(){
 
 				this.backButton.on("click", lang.hitch(this, function(){
+					if(has("phone")){
+						console.log("need to find list view and update css...");
+						if(this.app.children.requestsApp_requestList){
+							this.app.children.requestsApp_requestList.constraint = "center";
+							domClass.remove(this.app.children.requestsApp_requestList.domNode, "left");
+							domClass.add(this.app.children.requestsApp_requestList.domNode, "center");
+						}
+					}else{
+						if(this.app.children.requestsApp_requestList){
+							this.app.children.requestsApp_requestList.constraint = "left";
+							domClass.remove(this.app.children.requestsApp_requestList.domNode, "center");
+							domClass.add(this.app.children.requestsApp_requestList.domNode, "left");
+						}
+					}
 					this.app.transitionToView(this.domNode, {
-						target: 'requestList', params: 'true'
+						target: 'requestList', params: {reverse : true}
 					});
 				}));
 
@@ -173,7 +187,7 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 
 				// change widgets readonly value based on that
 				query("input", this.domNode).forEach(function(node){
-					if(registry.byNode(node) && node.id !== "reqid" && !registry.byNode(node).usesOpener){
+					if(node.id !== "reqid" && !registry.byNode(node).usesOpener){
 						registry.byNode(node).set("readOnly", !_editMode);
 					}
 				});

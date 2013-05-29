@@ -28,7 +28,8 @@
 	"controllers": [
 		"dojox/app/controllers/Load",
 		"dojox/app/controllers/Transition",
-		"dojox/app/controllers/Layout"
+		"requestsApp/controllers/CssLayout",
+		"requestsApp/controllers/NavigationController"
 	],
 	"nls": "requestsApp/nls/requests",
 	"defaultTransition": "slide",
