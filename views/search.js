@@ -30,6 +30,14 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 			activeDateField : null,
 			init: function(){
 
+				this.backButton.on("click", lang.hitch(this, function(){
+					// I thought about using history.back here, but it does not work if you have done a copy or an edit
+					this.app.transitionToView(this.domNode, {
+						target: 'requestList', reverse : true
+					});
+					return false; // return false to stop the toolbarButton or listItem from doing a defaultClickAction
+				}));
+
 				// setup _sortDirStore
 				var _sortDirdata = {"identifier": "key","items":[{key: "ascending", label: "Ascending"}, {key: "descending", label: "Descending"}]};
 				_sortDirStore = new Memory({data: _sortDirdata});
@@ -188,10 +196,6 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 
 			beforeActivate: function (previousView){
 
-				// we show/hide the back button based on whether we are on tablet or phone layout, as we have two panes
-				// in tablet it makes no sense to get a back button
-				this.backButton.domNode.style.display=has("phone")?"":"none";
-
 				// let's fill the form with the currently selected contact
 				// if nothing selected skip that part
 				var view=this;
@@ -315,26 +319,10 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 					var list = registry.byId("requestsList");
 					list.setQuery(queryObj, {sort:sortObj});
 
-					// in tablet we want one to be selected on search
-					if(!has("phone")){
-						var item = list.getChildren()[0];
-						if(item){
-							list.selectItem(item);
-							// transition
-							this.app.transitionToView(this.domNode, {
-								target: "requestItemDetails",
-								params: {
-									id: item.id
-								}
-							});
-						}
-
-					}else{
-						// transition
-						this.app.transitionToView(this.domNode, {
-							target: "requestList"
-						});
-					}
+					// transition
+					this.app.transitionToView(this.domNode, {
+						target: "requestList"
+					});
 				}
 			}
 		}

@@ -12,12 +12,8 @@
 	</div>
 	<button data-dojo-type="dojox/mobile/Button"
 		data-dojo-attach-point="searchButton" class="mblBlueButton">${nls.search}</button>
-<!--
-	<button data-dojo-type="dojox/mobile/Button"
-		data-dojo-attach-point="createButton2" data-dojo-props="target: 'requestItemDetails'" class="mblBlueButton">${nls.create}</button>
--->
 	<div data-dojo-type="dojox/mobile/EdgeToEdgeStoreList"
 			 data-dojo-attach-point="requests" id="requestsList"
 			 data-dojo-props="store: this.loadedStores.requestsListStore,
-			 itemRenderer: this.RequestListItem, stateful: !has('phone')"></div>
+			 itemRenderer: this.RequestListItem, stateful: false"></div>
 </div>

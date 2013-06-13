@@ -25,9 +25,11 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 			init: function(){
 
 				this.backButton.on("click", lang.hitch(this, function(){
+					// I thought about using history.back here, but it does not work if you have done a copy or an edit
 					this.app.transitionToView(this.domNode, {
-						target: 'requestList', params: 'true'
+						target: 'requestList', reverse : true
 					});
+					return false; // return false to stop the toolbarButton or listItem from doing a defaultClickAction
 				}));
 
 				this.editButton.on("click", lang.hitch(this, function(){
@@ -163,9 +165,6 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 				// get the id of the displayed contact from the params
 				var id=this.params.id;
 
-				// we show/hide the back button based on whether we are on tablet or phone layout, as we have two panes
-				// in tablet it makes no sense to get a back button
-				this.backButton.domNode.style.display=has("phone")?"":"none";
 				// are we in create mode
 				var create = (typeof id === "undefined");
 				// are we in edit mode or not? if we are we need to slightly update the view for that

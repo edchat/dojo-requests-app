@@ -5,7 +5,7 @@ define(["dojo/_base/declare", "dojo/_base/lang", "dojo/_base/array", "dojo/has",
 		target: "requestItemDetails",
 		clickable: true,
 		// we don't get an arrow if we are on a two panes layout (tablet)
-		noArrow: !has("phone"),
+		noArrow: false,
 		postMixInProperties: function(){
 			this.inherited(arguments);
 			this.transitionOptions = {
@@ -20,16 +20,6 @@ define(["dojo/_base/declare", "dojo/_base/lang", "dojo/_base/array", "dojo/has",
 		RequestListItem: RequestListItem,
 		init: function(){
 			var view = this;
-			this.requests.on("add", lang.hitch(this, function(item){
-				// select the newly added element
-				if(!has("phone")){
-					this.requests.deselectAll();
-					this.selectItemById(item.id);
-				}
-			}));
-		//	this.add.on("click", function(){
-		//		view.requests.deselectAll();
-		//	});
 			this.createButton.on("click", lang.hitch(this, function(){
 				view.requests.deselectAll();
 				this.app.transitionToView(this.domNode, {
@@ -45,26 +35,6 @@ define(["dojo/_base/declare", "dojo/_base/lang", "dojo/_base/array", "dojo/has",
 
 			if(this.params && this.params.id){
 				this.selectItemById(this.params.id);
-			}
-		},
-		beforeActivate: function(){
-			// in tablet we want one to be selected at init
-			if(!has("phone")){
-				// check if something is selected
-				var selected = array.some(this.requests.getChildren(), function(child){
-					return child.get("selected");
-				});
-				if(!selected){
-					var item = this.requests.getChildren()[0];
-					this.requests.selectItem(item);
-					// transition
-					this.app.transitionToView(this.domNode, {
-						target: "requestItemDetails",
-						params: {
-							id: item.id
-						}
-					});
-				}
 			}
 		},
 

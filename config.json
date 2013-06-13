@@ -78,11 +78,6 @@
 			"template": "requestsApp/views/list.html",
 			"nls": "requestsApp/nls/list",
 			"dependencies":["dojox/mobile/TextBox"],
-			"has": {
-				"!phone": {
-					"constraint": "left"
-				}
-			}
 		},
 		"requestItemDetails":{
 			"controller" : "requestsApp/views/details.js",
