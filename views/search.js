@@ -196,8 +196,7 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 
 			beforeActivate: function (previousView){
 
-				// let's fill the form with the currently selected contact
-				// if nothing selected skip that part
+				// let's fill the form with the currently selected request
 				var view=this;
 				var searchObject = this.searchObject;
 
@@ -228,7 +227,6 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 			},
 
 			_saveForm: function (){
-			//	var id=this.params.id || this.reqid.get("value");
 				var view=this;
 				// get the request on the store
 				// otherwise update it
@@ -314,8 +312,6 @@ define(["dojo/_base/array", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct",
 						}
 						sortObj.push(sortObj2);
 					}
-				//	var data = this.loadedStores.requestsListStore.query(queryObj, {sort:[sortObj1, sortObj2]});
-				//	console.log("TEMP test data = ",data);
 					var list = registry.byId("requestsList");
 					list.setQuery(queryObj, {sort:sortObj});
 

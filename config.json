@@ -77,7 +77,7 @@
 			"controller" : "requestsApp/views/list.js",
 			"template": "requestsApp/views/list.html",
 			"nls": "requestsApp/nls/list",
-			"dependencies":["dojox/mobile/TextBox"],
+			"dependencies":["dojox/mobile/TextBox"]
 		},
 		"requestItemDetails":{
 			"controller" : "requestsApp/views/details.js",
